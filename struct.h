@@ -11,10 +11,10 @@
 
 //ENUMERATION
 
-typedef enum {eau, banquise} T_surface; // Type qui défini la surface du plateau : si c'est une limite de jeu, une case d'eau où rien ne peut se trouver ou une case de glace
-typedef enum {rien_dir, depart, arrive} T_direction; // Défini si la case est une case de départ, de fin ou ni l'un, ni l'autre.
-typedef enum {glacon_obj, rocher, marteauAxe, marteauTete, piege} T_typeObjet; //Défini le type d'objet se trouvant sur une case de glace.
-typedef enum {rouge, vert, bleu, jaune} T_couleur; //Défini les couleurs que peuvent prendre les personnages
+typedef enum {eau, banquise} T_surface; // Type qui dï¿½fini la surface du plateau : si c'est une limite de jeu, une case d'eau oï¿½ rien ne peut se trouver ou une case de glace
+typedef enum {rien_dir, depart, arrive} T_direction; // Dï¿½fini si la case est une case de dï¿½part, de fin ou ni l'un, ni l'autre.
+typedef enum {glacon_obj, rocher, marteauAxe, marteauTete, piege} T_typeObjet; //Dï¿½fini le type d'objet se trouvant sur une case de glace.
+typedef enum {rouge, vert, bleu, jaune} T_couleur; //Dï¿½fini les couleurs que peuvent prendre les personnages
 
 //STRUCTURES
 
@@ -22,20 +22,20 @@ typedef struct
 {
     int x;
     int y;
-}T_position; //Défini une position
+}T_position; //Dï¿½fini une position
 
 typedef struct
 {
     int dx;
     int dy;
-}T_vecteur; //Défini un vecteur
+}T_vecteur; //Dï¿½fini un vecteur
 
 typedef struct
 {
     T_typeObjet objet;
     T_position position;
     T_vecteur vecteur;
-}T_objet; // Défini les différents objets
+}T_objet; // Dï¿½fini les diffï¿½rents objets
 
 typedef struct
 {
@@ -45,7 +45,7 @@ typedef struct
     T_position position;
     T_vecteur direction;
     int score;
-}T_joueur;  // Défini un joueur
+}T_joueur;  // Dï¿½fini un joueur
 
 typedef struct
 {
@@ -54,7 +54,7 @@ typedef struct
     T_objet *typeObjet;
     T_direction checkpoint;
     char symbole;
-}T_case;  //Défini tout ce qui compose une case
+}T_case;  //Dï¿½fini tout ce qui compose une case
 
 
 

@@ -9,7 +9,7 @@ void color(int t, int f)
     HANDLE H=GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(H,f*16+t);
 }
-void affichageBanquise(T_case **banquise, int taille,T_position *ptr_case_depart, T_position *ptr_case_arrive)  // Affiche la banquise
+void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
 {
     int i, j;
     for(j=0; j<taille+2; j++)
@@ -26,18 +26,30 @@ void affichageBanquise(T_case **banquise, int taille,T_position *ptr_case_depart
             {
                 if(banquise[i-1][j-1].etat==1)
                 {
-                    if(((i==ptr_case_depart->x+1)&&(j==ptr_case_depart->y+1)))
-                        color(0,3);
-                    else if (((i==ptr_case_arrive->x+1)&&(j==ptr_case_arrive->y+1)))
-                        color(0,4);
+                    if(banquise[i-1][j-1].symbole=='D')
+                    {
+                        color(0,5);
+                        printf(" %c ", banquise[i-1][j-1].symbole);
+                    }
+                    else if (banquise[i-1][j-1].symbole=='A')
+                    {
+                        color(0,6);
+                        printf(" %c ", banquise[i-1][j-1].symbole);
+                    }
+                    else if (banquise[i-1][j-1].typeObjet!=NULL)
+                    {
+                        color(0,7);
+                        printf("   ");
+                    }
                     else
-                        color(0,15);
-
-                    printf("   ", banquise[i-1][j-1].symbole);
+                    {
+                      color(0,15);
+                      printf("   ");
+                    }
                 } else
                 {
                     color(0,9);
-                    printf("   ", banquise[i-1][j-1].symbole);
+                    printf(" %c ", banquise[i-1][j-1].symbole);
                 }
             }
         }
@@ -103,7 +115,7 @@ int banquisePeutFondre(int **etatBanquise, int i, int j, int taille) // Dis si l
 
 void majBanquise(T_case **banquise, int **etatBanquise, int taille) // Fonction permettant de copier l'�tat de la banquise et de la sauvegard�e dans la matrice etatBanquise FONCTION OK
 {
-    int i, j, etat;
+    int i, j;
     for (i=0;i<taille;i++) //On parcourt la matrice banquise
     {
         for (j=0;j<taille;j++)
@@ -134,14 +146,14 @@ void fonteDesGlaces(T_case **banquise, int **etatBanquise, int taille) // Foncti
             Si la case est la case de départ ou d'arrivée, elle ne peut pas fondre
             */
             {
-                //Si oui, on tire un nombre al�atoire pour voir si elle peut fondre
-                fonteBanquise = rand() % 100; // Ici, la banquise � 5% de chance de fondre
+                //Si oui, on tire un nombre aléatoire pour voir si elle peut fondre
+                fonteBanquise = rand() % 100; // Ici, la banquise à 5% de chance de fondre
                 if(fonteBanquise < 5) // On compare le nombre au pourcentage choisi, et si le nombre rentre dans le pourcentage :
                 {
                     banquise[i][j].etat = 0; //La banquise devient de l'eau
                     banquise[i][j].typeObjet = NULL; // Il n'y a plus d'objet sur la case
                     banquise[i][j].occupe = NULL; // Il n'y a plus de joueur
-                    banquise[i][j].symbole = '^'; // Le symbole change
+                    banquise[i][j].symbole = 'E'; // Le symbole change
                 }
             }
         }
@@ -180,4 +192,36 @@ void glaconFond(T_case **banquise, int taille)  //Fonction permettant d'applique
 
     }
 
+}
+
+int totalDeGlacon(T_case **banquise, int taille) // Compte le nombre total de glaçons présents sur la banquise
+{
+
+  //VARIABLES
+
+
+  int i,j,nbGlacon=0;
+
+  //CODE
+
+
+  for(j=0; j<taille; j++) // On parcours la banquise et on regarde si les cases sont de l'eau ou de la banquise
+  {
+      for(i=0;i<taille; i++)
+      {
+          if(banquise[i][j].typeObjet!=NULL) //On regarde si la case pointe sur un objet ou sur null
+          {
+            if(banquise[i][j].typeObjet->objet==0) // Si la case pointe sur un objet, on regarde si c'est un glaçon
+            {
+              nbGlacon += 1; //Si c'est un glaçon, on incrémente le nombre de glaçons de 1
+            }
+          }
+      }
+
+  }
+
+  //RETURN
+
+
+  return nbGlacon;
 }

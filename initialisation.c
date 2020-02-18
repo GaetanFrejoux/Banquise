@@ -21,7 +21,7 @@ int init_taille() // Demande la taille du plateau de jeu
     int taille=0;
     do
     {
-        printf("\nVeuillez choisir la taille de la banquise \(minimum 2\):  "); //Demande � l'utisateur de rentrer une valeur.
+        printf("\nVeuillez choisir la taille de la banquise (minimum 2):  "); //Demande � l'utisateur de rentrer une valeur.
         scanf("%d",&taille);   // Demande de l'input par l'utilisateur.
     }
     while(taille<2);
@@ -110,4 +110,47 @@ T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur avec 4 maximum
         int score;
     }
     return tab_joueur;
+}
+
+void apparition_glacons(T_case **banquise, int taille) //Place des glacons de manière aléatoire sur la banquise.
+{
+
+  //VARIABLES
+
+
+  int i,j, pourcentageApparitionGlacon=0;
+  srand(time(NULL));
+
+  //CODE
+
+  for(i=0; i<taille; i++) // On parcours la banquise
+  {
+      for(j=0;j<taille; j++)
+      {
+        T_objet nouveau_rocher;
+        pourcentageApparitionGlacon = rand() % 100; //A chaque case, on tire un nombre au sort pour savoir si l'on pose un glacon ou non
+        if((pourcentageApparitionGlacon<10) && (banquise[i][j].occupe==NULL) && (banquise[i][j].typeObjet==NULL))
+        /*
+        Ici, si le nombre passe en dessous de 10 %,
+        et que la case n'est pas occupée par un joueur ou un objet,
+        on créer le glaçon
+        */
+        {//On créer un nouvel objet pour que le pointeur objet de la case puisse directement pointer sur l'objet en question
+          nouveau_rocher.objet=0;  // On initialise le glaçon
+          nouveau_rocher.position.x=i;
+          nouveau_rocher.position.y=j;
+          nouveau_rocher.vecteur.dx=0;
+          nouveau_rocher.vecteur.dy=0;
+          T_objet *ptr_nouveau_rocher=&nouveau_rocher;
+          banquise[i][j].typeObjet=ptr_nouveau_rocher;
+        }
+        //Le glaçon est créer
+      }
+
+  }
+
+  //RETURN
+
+
+  return;
 }
