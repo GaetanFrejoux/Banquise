@@ -1,11 +1,11 @@
 //INCLUDES
 
 #include "banquise.h"
-
+//Je test de choses... ;)
 //FONCTIONS
-
+// SalutSalut
 //Bonjour
-//au revoir
+
 void color(int t, int f)
 {
     HANDLE H=GetStdHandle(STD_OUTPUT_HANDLE);
