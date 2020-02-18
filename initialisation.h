@@ -7,10 +7,10 @@
 
 int init_nombre_joueur();
 int init_taille(); // Demande la taille du plateau de jeu
-T_case **init_banquise(int taille); // Créer la matrice de la banquise et la banquise initiale.
-int **init_etat_banquise(int taille); // Créer la matrice de mémorisation de l'état de la banquise au tour précédent afin d'appliquer la fonde sur ce shéma et non le nouveau
-void init_depart_arriver(T_case **map,int taille);
-T_joueur *init_joueur(int nb_joueur);
+T_case **init_banquise(int taille); // Crï¿½er la matrice de la banquise et la banquise initiale.
+int **init_etat_banquise(int taille); // Crï¿½er la matrice de mï¿½morisation de l'ï¿½tat de la banquise au tour prï¿½cï¿½dent afin d'appliquer la fonde sur ce shï¿½ma et non le nouveau
+void init_depart_arriver(T_case **map,int taille,T_position *ptr_case_depart, T_position *ptr_case_arrive); //Creer des positions de depart et d'arriver
+T_joueur *init_joueur(int nb_joueur); //Creer un tableau de joueur avec 4 maximum
 
 
 #endif // INITIALISATION_H_INCLUDED

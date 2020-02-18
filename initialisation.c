@@ -9,7 +9,7 @@ int init_nombre_joueur()
     int nombre=0;
     do
     {
-    printf("\nVeuillez choisir le nombre de joueur entre 1 et 4:  "); //Demande à l'utisateur de rentrer une valeur.
+    printf("\nVeuillez choisir le nombre de joueur entre 1 et 4:  "); //Demande ï¿½ l'utisateur de rentrer une valeur.
     scanf("%d",&nombre);   // Demande de l'input par l'utilisateur.
     }
     while(nombre>4||nombre<1);
@@ -21,14 +21,14 @@ int init_taille() // Demande la taille du plateau de jeu
     int taille=0;
     do
     {
-        printf("\nVeuillez choisir la taille de la banquise \(minimum 2\):  "); //Demande à l'utisateur de rentrer une valeur.
+        printf("\nVeuillez choisir la taille de la banquise \(minimum 2\):  "); //Demande ï¿½ l'utisateur de rentrer une valeur.
         scanf("%d",&taille);   // Demande de l'input par l'utilisateur.
     }
     while(taille<2);
     return taille; // retourne la valeur que l'utilisateur a inscrite.
 }
 
-T_case **init_banquise(int taille) // Créer la matrice de la banquise et la banquise initiale.
+T_case **init_banquise(int taille) // Crï¿½er la matrice de la banquise et la banquise initiale.
 {
     int i, j;
     T_case **banquise;
@@ -51,7 +51,7 @@ T_case **init_banquise(int taille) // Créer la matrice de la banquise et la banq
     return banquise;
 }
 
-int **init_etat_banquise(int taille) // Créer une matrice qui permettra de sauvegarder l'état du sol de la banquise
+int **init_etat_banquise(int taille) // Crï¿½er une matrice qui permettra de sauvegarder l'ï¿½tat du sol de la banquise
 {
     int i, j;
     int **etatBanquise;
@@ -70,26 +70,30 @@ int **init_etat_banquise(int taille) // Créer une matrice qui permettra de sauve
     return etatBanquise;
 }
 
-void init_depart_arriver(T_case **map,int taille)
+void init_depart_arriver(T_case **map,int taille,T_position *ptr_case_depart, T_position *ptr_case_arrive)
 {
     srand(time(NULL));
-    int x_dep,x_arr,y_dep,y_arr;
+    T_position depart,arrive;
     do
     {
-        x_dep=rand()%taille;
-        x_arr=rand()%taille;
-        y_dep=rand()%taille;
-        y_arr=rand()%taille;
+        depart.x=rand()%taille;
+        depart.y=rand()%taille;
+        arrive.x=rand()%taille;
+        arrive.y=rand()%taille;
     }
-    while((map[x_dep][y_dep].etat!=1)||(map[x_arr][y_arr].etat!=1)||((x_dep==x_arr)&&(y_dep==y_arr)));
-    map[x_dep][y_dep].checkpoint=1;
-    map[x_dep][y_dep].symbole='D';
-    map[x_arr][y_arr].checkpoint=1;
-    map[x_arr][y_arr].symbole='A';
+    while((map[depart.x][depart.y].etat!=1)||(map[arrive.x][arrive.y].etat!=1)||((depart.x==arrive.x)&&(depart.y==arrive.y)));
+    map[depart.x][depart.y].checkpoint=1;
+    map[depart.x][depart.y].symbole='D';
+    map[arrive.x][arrive.y].checkpoint=2;
+    map[arrive.x][arrive.y].symbole='A';
+    ptr_case_depart->x=depart.x;
+    ptr_case_arrive->x=arrive.x;
+    ptr_case_depart->y=depart.y;
+    ptr_case_arrive->y=arrive.y;
     return;
 }
 
-T_joueur *init_joueur(int nb_joueur)
+T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur avec 4 maximum
 {
     T_joueur *tab_joueur;
     tab_joueur =(T_joueur *)malloc(sizeof(T_joueur)*nb_joueur);

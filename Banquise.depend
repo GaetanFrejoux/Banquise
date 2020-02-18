@@ -45,3 +45,26 @@
 1581788368 source:f:\s4\c\tp4\banquise\banquise.c
 	"banquise.h"
 
+1582017362 source:c:\users\gfrejoux\desktop\banquise\main.c
+	"banquise.h"
+	"initialisation.h"
+
+1582016684 c:\users\gfrejoux\desktop\banquise\banquise.h
+	"struct.h"
+
+1582012562 c:\users\gfrejoux\desktop\banquise\struct.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<windows.h>
+
+1582016692 c:\users\gfrejoux\desktop\banquise\initialisation.h
+	"struct.h"
+
+1582017324 source:c:\users\gfrejoux\desktop\banquise\banquise.c
+	"banquise.h"
+
+1582017326 source:c:\users\gfrejoux\desktop\banquise\initialisation.c
+	"initialisation.h"
+
