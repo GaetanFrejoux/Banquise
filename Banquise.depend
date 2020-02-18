@@ -1,0 +1,47 @@
+# depslib dependency file v1.0
+1581679024 source:e:\s4\c\tp4\banquise\banquise.c
+	"banquise.h"
+
+1581678992 e:\s4\c\tp4\banquise\banquise.h
+	"struct.h"
+
+1581679052 source:e:\s4\c\tp4\banquise\main.c
+	"banquise.h"
+	"initialisation.h"
+	"struct.h"
+
+1581676108 e:\s4\c\tp4\banquise\struct.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+
+1581678120 source:e:\s4\c\tp4\banquise\initialisation.c
+	"initialisation.h"
+
+1581678196 e:\s4\c\tp4\banquise\initialisation.h
+	"struct.h"
+
+1581783842 source:f:\s4\c\tp4\banquise\initialisation.c
+	"initialisation.h"
+
+1581788368 f:\s4\c\tp4\banquise\initialisation.h
+	"struct.h"
+
+1581788510 f:\s4\c\tp4\banquise\struct.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<windows.h>
+
+1581787790 source:f:\s4\c\tp4\banquise\main.c
+	"banquise.h"
+	"initialisation.h"
+
+1581788368 f:\s4\c\tp4\banquise\banquise.h
+	"struct.h"
+
+1581788368 source:f:\s4\c\tp4\banquise\banquise.c
+	"banquise.h"
+
