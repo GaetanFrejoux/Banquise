@@ -5,7 +5,7 @@
 //FONCTIONS
 
 //Bonjour
-
+//au revoir
 void color(int t, int f)
 {
     HANDLE H=GetStdHandle(STD_OUTPUT_HANDLE);
