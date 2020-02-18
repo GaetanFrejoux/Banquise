@@ -3,8 +3,6 @@
 #include "banquise.h"
 
 //FONCTIONS
-//ok
-
 
 void color(int t, int f)
 {
