@@ -93,24 +93,6 @@ void init_depart_arriver(T_case **map,int taille,T_position *ptr_case_depart, T_
     return;
 }
 
-T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur avec 4 maximum
-{
-    T_joueur *tab_joueur;
-    tab_joueur =(T_joueur *)malloc(sizeof(T_joueur)*nb_joueur);
-    for(int i=0 ; i<nb_joueur; i++)
-    {
-        printf("Nom du premier joueur : ");
-        scanf("%s",&tab_joueur->nom);
-        tab_joueur->representation=i;
-        tab_joueur->identite=i+1;
-        tab_joueur->position.x=0;
-        tab_joueur->position.y=0;
-        tab_joueur->direction.dx=-1;
-        tab_joueur->direction.dy=-1;
-        int score;
-    }
-    return tab_joueur;
-}
 
 void apparition_glacons(T_case **banquise, int taille) //Place des glacons de manière aléatoire sur la banquise.
 {
@@ -153,4 +135,30 @@ void apparition_glacons(T_case **banquise, int taille) //Place des glacons de ma
 
 
   return;
+}
+
+
+T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur avec 4 maximum
+{
+    T_joueur *tab_joueur;
+    tab_joueur =(T_joueur *)malloc(sizeof(T_joueur)*nb_joueur);
+    for(int i=0 ; i<nb_joueur; i++)
+    {
+        printf("Nom du joueur %d  : ",i+1);
+        scanf("%s",&tab_joueur->nom);
+        tab_joueur->representation=i;
+        tab_joueur->identite=i+1;
+        tab_joueur->position.x=0;
+        tab_joueur->position.y=0;
+        tab_joueur->direction.dx=-1;
+        tab_joueur->direction.dy=-1;
+        int score;
+    }
+    return tab_joueur;
+}
+void init_position_joueur(T_case **map,T_joueur *tableau_joueur,int taille_map,int nb_joueur,T_position *position_depart)
+{
+    tableau_joueur[0].position.x=position_depart->x;
+    tableau_joueur[0].position.y=position_depart->y;
+    map[position_depart->x][position_depart->y].occupe=&tableau_joueur[0];
 }
