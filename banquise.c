@@ -11,6 +11,7 @@ void color(int t, int f)
 }
 void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
 {
+  system("cls"); // clear le cmd
     int i, j;
     for(j=0; j<taille+2; j++)
     {
@@ -57,7 +58,6 @@ void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
 
     return;
 }
-
 
 void affichageEtatBanquise(int **etatBanquise, int taille)  // Affiche la matrice de l'�tat de la banquise FONCTION OK
 {
