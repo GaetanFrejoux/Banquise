@@ -27,9 +27,14 @@ void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
             {
                 if(banquise[i-1][j-1].etat==1)
                 {
-                    if(banquise[i-1][j-1].symbole=='D')
+                    if (banquise[i-1][j-1].occupe!=NULL)
                     {
-                        color(0,5);
+                      color(15,banquise[i-1][j-1].occupe->identite+1); // prend une couleur différente pour chaque joueur.
+                      printf(" %d ", banquise[i-1][j-1].occupe->identite);
+                    }
+                    else if(banquise[i-1][j-1].symbole=='D')
+                    {
+                        color(0,8);
                         printf(" %c ", banquise[i-1][j-1].symbole);
                     }
                     else if (banquise[i-1][j-1].symbole=='A')

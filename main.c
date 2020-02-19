@@ -25,7 +25,7 @@ int main()
     {
       for(int j=0;j<taille_banquise;j++)
       {
-        if(banquise[i][j].typeObjet!=NULL)
+        if(banquise[i][j].typeObjet!=(NULL))
         {
             printf("%d\n",banquise[i][j].typeObjet->objet);
         }
@@ -33,11 +33,10 @@ int main()
     }
     printf("Le nombre de glacons present sur la carte est de %d\n",nbGlacons);
     affichageBanquise(banquise,taille_banquise);
-    printf("\n%s\n",tableau_joueur[0].nom);
-    printf(" x : %d\n",tableau_joueur[0].position.x);
-    printf(" y : %d\n",tableau_joueur[0].position.y);
 
-    printf("\n%s\n",banquise[ptr_case_depart->x][ptr_case_depart->y].occupe->nom);
-
+    printf("\n x : %d\n",banquise[ptr_case_depart->x-1][ptr_case_depart->y].occupe->identite);
+    printf("\n x : %d\n",banquise[ptr_case_depart->x][ptr_case_depart->y-1].occupe->identite);
+    printf("\n x : %d\n",banquise[ptr_case_depart->x+1][ptr_case_depart->y].occupe->identite);
+    printf("\n x : %d\n",banquise[ptr_case_depart->x][ptr_case_depart->y+1].occupe->identite);
     return 0;
 }

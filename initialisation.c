@@ -158,7 +158,24 @@ T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur avec 4 maximum
 }
 void init_position_joueur(T_case **map,T_joueur *tableau_joueur,int taille_map,int nb_joueur,T_position *position_depart)
 {
+      tableau_joueur[0].position.x=position_depart->x-1;
+      tableau_joueur[0].position.y=position_depart->y;
+      map[position_depart->x-1][position_depart->y].occupe=&tableau_joueur[0];
+      tableau_joueur[1].position.x=position_depart->x;
+      tableau_joueur[1].position.y=position_depart->y-1;
+      map[position_depart->x][position_depart->y+1].occupe=&tableau_joueur[1];
+      tableau_joueur[2].position.x=position_depart->x+1;
+      tableau_joueur[2].position.y=position_depart->y;
+      map[position_depart->x+1][position_depart->y].occupe=&tableau_joueur[2];
+      tableau_joueur[3].position.x=position_depart->x;
+      tableau_joueur[3].position.y=position_depart->y+1;
+      map[position_depart->x][position_depart->y-1].occupe=&tableau_joueur[3];
+
+
+
+  /*
     tableau_joueur[0].position.x=position_depart->x;
     tableau_joueur[0].position.y=position_depart->y;
     map[position_depart->x][position_depart->y].occupe=&tableau_joueur[0];
+  */
 }
