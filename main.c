@@ -35,7 +35,12 @@ int main()
     affichageBanquise(banquise, taille_banquise);
     fonteDesGlaces(banquise, etatBanquise, taille_banquise);
     affichageBanquise(banquise, taille_banquise);
-
+    fonteDesGlaces(banquise, etatBanquise, taille_banquise);
+    affichageBanquise(banquise, taille_banquise);
+    fonteDesGlaces(banquise, etatBanquise, taille_banquise);
+    affichageBanquise(banquise, taille_banquise);
+    fonteDesGlaces(banquise, etatBanquise, taille_banquise);
+    affichageBanquise(banquise, taille_banquise);
     nbGlacons = totalDeGlacon(banquise, taille_banquise);
     printf("Le nombre de glacons present sur la carte est de %d\n",nbGlacons);
 
