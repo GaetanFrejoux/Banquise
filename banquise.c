@@ -140,7 +140,7 @@ void fonteDesGlaces(T_case **banquise, int **etatBanquise, int taille) // Foncti
     {
         for(i=0;i<taille; i++)
         {
-            if((etatBanquise[i][j]==1) && (banquisePeutFondre(etatBanquise,i,j,taille)==1) && (banquise[i][j].checkpoint==0))
+            if((etatBanquise[i][j]==1) && (banquisePeutFondre(etatBanquise,i,j,taille)==1) && (banquise[i][j].checkpoint==0) && (banquise[i][j].typeObjet==NULL))
             /*
             On regarde si la case est une case de banquise, si la case peut fondre (1) ou non (0).
             Si la case est la case de départ ou d'arrivée, elle ne peut pas fondre
