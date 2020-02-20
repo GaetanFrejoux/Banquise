@@ -93,7 +93,7 @@ void init_depart_arriver(T_case **map,int taille,T_position *ptr_case_depart, T_
 }
 
 
-void apparition_glacons(T_case **banquise, int taille) //Place des glacons de manière aléatoire sur la banquise.
+int apparition_glacons(T_case **banquise, int taille) //Place des glacons de manière aléatoire sur la banquise.
 {
 
   //VARIABLES
@@ -106,34 +106,31 @@ void apparition_glacons(T_case **banquise, int taille) //Place des glacons de ma
 
   for(i=0; i<taille; i++) // On parcours la banquise
   {
-      for(j=0;j<taille; j++)
-      {
+    for(j=0;j<taille; j++)
+    {
 
-        pourcentageApparitionGlacon = rand() % 100; //A chaque case, on tire un nombre au sort pour savoir si l'on pose un glacon ou non
-        if((pourcentageApparitionGlacon<10) && (banquise[i][j].occupe==NULL) && (banquise[i][j].typeObjet==NULL))
-        /*
-        Ici, si le nombre passe en dessous de 10 %,
-        et que la case n'est pas occupée par un joueur ou un objet,
-        on créer le glaçon
-        */
-        {//On créer un nouvel objet pour que le pointeur objet de la case puisse directement pointer sur l'objet en question
-          nb_gla+=1;
-          banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
-          banquise[i][j].typeObjet->objet=0;  // On initialise le glaçon
-          banquise[i][j].typeObjet->position.x=i;
-          banquise[i][j].typeObjet->position.y=j;
-          banquise[i][j].typeObjet->vecteur.dx=0;
-          banquise[i][j].typeObjet->vecteur.dy=0;
-        }
-        //Le glaçon est créer
+      pourcentageApparitionGlacon = rand() % 100; //A chaque case, on tire un nombre au sort pour savoir si l'on pose un glacon ou non
+      if((pourcentageApparitionGlacon<10) && (banquise[i][j].occupe==NULL) && (banquise[i][j].typeObjet==NULL))
+      /*
+      Ici, si le nombre passe en dessous de 10 %,
+      et que la case n'est pas occupée par un joueur ou un objet,
+      on créer le glaçon
+      */
+      {//On créer un nouvel objet pour que le pointeur objet de la case puisse directement pointer sur l'objet en question
+        nb_gla+=1;
+        banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+        banquise[i][j].typeObjet->objet=0;  // On initialise le glaçon
+        banquise[i][j].typeObjet->position.x=i;
+        banquise[i][j].typeObjet->position.y=j;
+        banquise[i][j].typeObjet->vecteur.dx=0;
+        banquise[i][j].typeObjet->vecteur.dy=0;
       }
-
+      //Le glaçon est créer
+    }
   }
 
   //RETURN
-
-
-  return;
+  return nb_gla;
 }
 
 
@@ -157,25 +154,30 @@ T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur avec 4 maximum
 }
 void init_position_joueur(T_case **map,T_joueur *tableau_joueur,int taille_map,int nb_joueur,T_position *position_depart)
 {
+  for(int i=0 ; i < nb_joueur ; i++ )
+  {
+    switch (i)
+    {
+      case 0 :
       tableau_joueur[0].position.x=(position_depart->x)-1;
       tableau_joueur[0].position.y=position_depart->y;
       map[(position_depart->x)-1][position_depart->y].occupe=&tableau_joueur[0];
+      break;
+      case 1 :
       tableau_joueur[1].position.x=position_depart->x;
       tableau_joueur[1].position.y=(position_depart->y)-1;
       map[position_depart->x][(position_depart->y)-1].occupe=&tableau_joueur[1];
+      break;
+      case 2 :
       tableau_joueur[2].position.x=(position_depart->x)+1;
       tableau_joueur[2].position.y=position_depart->y;
       map[(position_depart->x)+1][position_depart->y].occupe=&tableau_joueur[2];
-      printf(" %d ", map[(position_depart->x)+1][position_depart->y].occupe->identite);
+      break;
+      case 3 :
       tableau_joueur[3].position.x=position_depart->x;
       tableau_joueur[3].position.y=(position_depart->y)+1;
       map[position_depart->x][(position_depart->y)+1].occupe=&tableau_joueur[3];
-      printf(" %d ", map[position_depart->x][(position_depart->y)+1].occupe->identite);
-
-
-  /*
-    tableau_joueur[0].position.x=position_depart->x;
-    tableau_joueur[0].position.y=position_depart->y;
-    map[position_depart->x][position_depart->y].occupe=&tableau_joueur[0];
-  */
+      break;
+    }
+  }
 }
