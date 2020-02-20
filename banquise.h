@@ -18,4 +18,6 @@ void fonteDesGlaces(T_case **banquise, int **etatBanquise, int taille); // Fonct
 void glaconFond(T_case **banquise, int taille); //Fonction permettant d'appliquer la fonte aux gla�ons
 int totalDeGlacon(T_case **banquise, int taille); // Compte le nombre total de glaçons présents sur la banquise
 
+void afficheCase( T_objet* unecase);
+
 #endif // BANQUISE_H_INCLUDED

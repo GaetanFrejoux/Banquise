@@ -1,4 +1,3 @@
-//INCLUDES
 
 #include "initialisation.h"
 
@@ -101,15 +100,15 @@ void apparition_glacons(T_case **banquise, int taille) //Place des glacons de ma
 
 
   int i,j, pourcentageApparitionGlacon=0;
+  int nb_gla=0;
   srand(time(NULL));
-
   //CODE
 
   for(i=0; i<taille; i++) // On parcours la banquise
   {
       for(j=0;j<taille; j++)
       {
-        T_objet nouveau_rocher;
+
         pourcentageApparitionGlacon = rand() % 100; //A chaque case, on tire un nombre au sort pour savoir si l'on pose un glacon ou non
         if((pourcentageApparitionGlacon<10) && (banquise[i][j].occupe==NULL) && (banquise[i][j].typeObjet==NULL))
         /*
@@ -118,13 +117,13 @@ void apparition_glacons(T_case **banquise, int taille) //Place des glacons de ma
         on créer le glaçon
         */
         {//On créer un nouvel objet pour que le pointeur objet de la case puisse directement pointer sur l'objet en question
-          nouveau_rocher.objet=0;  // On initialise le glaçon
-          nouveau_rocher.position.x=i;
-          nouveau_rocher.position.y=j;
-          nouveau_rocher.vecteur.dx=0;
-          nouveau_rocher.vecteur.dy=0;
-          T_objet *ptr_nouveau_rocher=&nouveau_rocher;
-          banquise[i][j].typeObjet=ptr_nouveau_rocher;
+          nb_gla+=1;
+          banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+          banquise[i][j].typeObjet->objet=0;  // On initialise le glaçon
+          banquise[i][j].typeObjet->position.x=i;
+          banquise[i][j].typeObjet->position.y=j;
+          banquise[i][j].typeObjet->vecteur.dx=0;
+          banquise[i][j].typeObjet->vecteur.dy=0;
         }
         //Le glaçon est créer
       }
@@ -145,32 +144,33 @@ T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur avec 4 maximum
     for(int i=0 ; i<nb_joueur; i++)
     {
         printf("Nom du joueur %d  : ",i+1);
-        scanf("%s",&tab_joueur->nom);
-        tab_joueur->representation=i;
-        tab_joueur->identite=i+1;
-        tab_joueur->position.x=0;
-        tab_joueur->position.y=0;
-        tab_joueur->direction.dx=-1;
-        tab_joueur->direction.dy=-1;
+        scanf("%s",tab_joueur[i].nom);
+        tab_joueur[i].representation=i;
+        tab_joueur[i].identite=i+1;
+        tab_joueur[i].position.x=0;
+        tab_joueur[i].position.y=0;
+        tab_joueur[i].direction.dx=-1;
+        tab_joueur[i].direction.dy=-1;
         int score;
     }
     return tab_joueur;
 }
 void init_position_joueur(T_case **map,T_joueur *tableau_joueur,int taille_map,int nb_joueur,T_position *position_depart)
 {
-      tableau_joueur[0].position.x=position_depart->x-1;
+      tableau_joueur[0].position.x=(position_depart->x)-1;
       tableau_joueur[0].position.y=position_depart->y;
-      map[position_depart->x-1][position_depart->y].occupe=&tableau_joueur[0];
+      map[(position_depart->x)-1][position_depart->y].occupe=&tableau_joueur[0];
       tableau_joueur[1].position.x=position_depart->x;
-      tableau_joueur[1].position.y=position_depart->y-1;
-      map[position_depart->x][position_depart->y+1].occupe=&tableau_joueur[1];
-      tableau_joueur[2].position.x=position_depart->x+1;
+      tableau_joueur[1].position.y=(position_depart->y)-1;
+      map[position_depart->x][(position_depart->y)-1].occupe=&tableau_joueur[1];
+      tableau_joueur[2].position.x=(position_depart->x)+1;
       tableau_joueur[2].position.y=position_depart->y;
-      map[position_depart->x+1][position_depart->y].occupe=&tableau_joueur[2];
+      map[(position_depart->x)+1][position_depart->y].occupe=&tableau_joueur[2];
+      printf(" %d ", map[(position_depart->x)+1][position_depart->y].occupe->identite);
       tableau_joueur[3].position.x=position_depart->x;
-      tableau_joueur[3].position.y=position_depart->y+1;
-      map[position_depart->x][position_depart->y-1].occupe=&tableau_joueur[3];
-
+      tableau_joueur[3].position.y=(position_depart->y)+1;
+      map[position_depart->x][(position_depart->y)+1].occupe=&tableau_joueur[3];
+      printf(" %d ", map[position_depart->x][(position_depart->y)+1].occupe->identite);
 
 
   /*

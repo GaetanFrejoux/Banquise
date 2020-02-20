@@ -15,28 +15,34 @@ int main()
     int **etatBanquise = init_etat_banquise(taille_banquise);
     T_joueur *tableau_joueur = init_joueur(nombre_joueur);
     affichageBanquise(banquise, taille_banquise);
+    int nbGlacons=0;
+    //CODE
     init_depart_arriver(banquise, taille_banquise, ptr_case_depart, ptr_case_arrive);
     init_position_joueur(banquise,tableau_joueur,taille_banquise,nombre_joueur,ptr_case_depart);
-    int nbGlacons=0;
-    affichageEtatBanquise(etatBanquise, taille_banquise);
-    //CODE
     apparition_glacons(banquise, taille_banquise);
+    nbGlacons = totalDeGlacon(banquise, taille_banquise);
     for(int i=0;i<taille_banquise;i++)
     {
       for(int j=0;j<taille_banquise;j++)
       {
         if(banquise[i][j].typeObjet!=(NULL))
         {
-            printf("%d\n",banquise[i][j].typeObjet->objet);
+            afficheCase(banquise[i][j].typeObjet);
         }
       }
     }
     printf("Le nombre de glacons present sur la carte est de %d\n",nbGlacons);
     affichageBanquise(banquise,taille_banquise);
 
-    printf("\n x : %d\n",banquise[ptr_case_depart->x-1][ptr_case_depart->y].occupe->identite);
-    printf("\n x : %d\n",banquise[ptr_case_depart->x][ptr_case_depart->y-1].occupe->identite);
-    printf("\n x : %d\n",banquise[ptr_case_depart->x+1][ptr_case_depart->y].occupe->identite);
-    printf("\n x : %d\n",banquise[ptr_case_depart->x][ptr_case_depart->y+1].occupe->identite);
+    for(int i=0;i<taille_banquise;i++)
+    {
+      for(int j=0;j<taille_banquise;j++)
+      {
+        if(banquise[i][j].typeObjet!=(NULL))
+        {
+            printf("\n\n%d",banquise[i][j].typeObjet->position.x);
+        }
+      }
+    }
     return 0;
 }

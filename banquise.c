@@ -11,7 +11,7 @@ void color(int t, int f)
 }
 void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
 {
-  system("cls"); // clear le cmd
+  //system("cls"); // clear le cmd
     int i, j;
     for(j=0; j<taille+2; j++)
     {
@@ -59,6 +59,7 @@ void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
                 }
             }
         }
+        color(15,0);
     }
 
     return;
@@ -229,4 +230,26 @@ int totalDeGlacon(T_case **banquise, int taille) // Compte le nombre total de gl
 
 
   return nbGlacon;
+}
+
+
+void afficheCase( T_objet* unecase){
+    switch(unecase->objet){
+        case glacon_obj : //, rocher, marteauAxe, marteauTete, piege
+            printf("\nG\n");
+            break;
+        case rocher :
+            printf("\nR\n");
+            break;
+        case marteauAxe :
+            printf("\nm\n");
+            break;
+        case marteauTete :
+            printf("\nT\n");
+            break;
+        case piege :
+            printf("\nP\n");
+            break;
+    }
+
 }
