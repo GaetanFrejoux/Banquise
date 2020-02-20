@@ -57,7 +57,29 @@ typedef struct
 }T_case;  //D�fini tout ce qui compose une case
 
 
+//NOUVEAU
+//NOUVEAU
+//NOUVEAU
+//NOUVEAU
+//NOUVEAU
+//NOUVEAU
+//NOUVEAU
+//NOUVEAU
 
+
+
+typedef struct
+{
+    int x;
+    int y;
+    struct T_cellule *suivant;
+}T_cellule;
+
+typedef struct
+{
+    T_cellule *deb;
+    T_cellule *fin;
+}T_file;
 
 
 #endif // STRUCT_H_INCLUDED
