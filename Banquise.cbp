@@ -43,6 +43,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="struct.h" />
+		<Unit filename="tour.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tour.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

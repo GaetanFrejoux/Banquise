@@ -8,7 +8,7 @@ int init_nombre_joueur()
     int nombre=0;
     do
     {
-    printf("\nVeuillez choisir le nombre de joueur entre 1 et 4:  "); //Demande � l'utisateur de rentrer une valeur.
+    printf("\nVeuillez choisir le nombre de joueur entre 1 et 4: "); //Demande � l'utisateur de rentrer une valeur.
     scanf("%d",&nombre);   // Demande de l'input par l'utilisateur.
     }
     while(nombre>4||nombre<1);
@@ -20,10 +20,10 @@ int init_taille() // Demande la taille du plateau de jeu
     int taille=0;
     do
     {
-        printf("\nVeuillez choisir la taille de la banquise (minimum 2):  "); //Demande � l'utisateur de rentrer une valeur.
+        printf("\nVeuillez choisir la taille de la banquise ( minimum : 8 , conseiller : 20 ) : "); //Demande � l'utisateur de rentrer une valeur.
         scanf("%d",&taille);   // Demande de l'input par l'utilisateur.
     }
-    while(taille<2);
+    while(taille<3);
     return taille; // retourne la valeur que l'utilisateur a inscrite.
 }
 
@@ -80,7 +80,7 @@ void init_depart_arriver(T_case **map,int taille,T_position *ptr_case_depart, T_
         arrive.x=rand()%taille;
         arrive.y=rand()%taille;
     }
-    while((map[depart.x][depart.y].etat!=1)||(map[arrive.x][arrive.y].etat!=1)||((depart.x==arrive.x)&&(depart.y==arrive.y)));
+    while((map[depart.x][depart.y].etat!=1)||(map[arrive.x][arrive.y].etat!=1)||((depart.x==arrive.x)&&(depart.y==arrive.y))||((depart.x==0)||(depart.y==0)||(depart.x==taille-1)||(depart.y==taille-1)));
     map[depart.x][depart.y].checkpoint=1;
     map[depart.x][depart.y].symbole='D';
     map[arrive.x][arrive.y].checkpoint=2;
@@ -93,14 +93,21 @@ void init_depart_arriver(T_case **map,int taille,T_position *ptr_case_depart, T_
 }
 
 
-void apparition_glacons(T_case **banquise, int taille) //Place des glacons de manière aléatoire sur la banquise.
+void apparition_objets(T_case **banquise, int taille) //Place des glacons de manière aléatoire sur la banquise.
 {
-
+  /*
+  Ici, si le nombre passe en dessous de 10 %,
+  et que la case n'est pas occupée par un joueur ou un objet,
+  on créer le glaçon
+  */
   //VARIABLES
 
 
-  int i,j, pourcentageApparitionGlacon=0;
-  int nb_gla=0;
+  int i,j,k, pourcentage=0;
+  int indice= -1;
+  int possible=0;
+  int *ptr_possible=&possible;
+  int nb_glacon=0,nb_rocher=0,nb_marteau=0,nb_piege=0;
   srand(time(NULL));
   //CODE
 
@@ -109,30 +116,79 @@ void apparition_glacons(T_case **banquise, int taille) //Place des glacons de ma
       for(j=0;j<taille; j++)
       {
 
-        pourcentageApparitionGlacon = rand() % 100; //A chaque case, on tire un nombre au sort pour savoir si l'on pose un glacon ou non
-        if((pourcentageApparitionGlacon<10) && (banquise[i][j].occupe==NULL) && (banquise[i][j].typeObjet==NULL))
-        /*
-        Ici, si le nombre passe en dessous de 10 %,
-        et que la case n'est pas occupée par un joueur ou un objet,
-        on créer le glaçon
-        */
-        {//On créer un nouvel objet pour que le pointeur objet de la case puisse directement pointer sur l'objet en question
-          nb_gla+=1;
-          banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
-          banquise[i][j].typeObjet->objet=0;  // On initialise le glaçon
-          banquise[i][j].typeObjet->position.x=i;
-          banquise[i][j].typeObjet->position.y=j;
-          banquise[i][j].typeObjet->vecteur.dx=0;
-          banquise[i][j].typeObjet->vecteur.dy=0;
+        pourcentage = rand() % 100; //A chaque case, on tire un nombre au sort pour savoir si l'on pose un objet ou non
+        if((banquise[i][j].occupe==NULL) && (banquise[i][j].typeObjet==NULL))
+        {
+            if(pourcentage<5)
+            indice=0;
+            else if (pourcentage<10)
+            indice=1;
+            else if (pourcentage<12)
+            indice=2;
+            else if (pourcentage<18)
+            indice=3;
+            else if (pourcentage<20)
+            indice=4;
+            switch (indice)
+            {
+                case 0:
+                banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                banquise[i][j].typeObjet->objet=0;
+                break;
+                case 1:
+                banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                banquise[i][j].typeObjet->objet=1;
+                break;
+                case 2:
+                if( i>2 && i<taille-2 && j>2 && j<taille-2 )
+                {
+                    for(int a=-2;a<3;a++)
+                    {
+                      for(int b=-2;b<3;b++)
+                        {
+                            if( a>-2 && a<2 && b>-2 && b<2 )
+                            {
+                                if((banquise[i+a][j+b].occupe!=NULL) && (banquise[i+a][j+b].typeObjet!=NULL))
+                                {
+                                    ptr_possible=1;
+                                }
+                            }else
+                            {
+                                if((banquise[i+a][j+b].occupe!=NULL) && (banquise[i+a][j+b].typeObjet!=NULL))
+                                {
+                                    if (banquise[i+a][j+b].typeObjet->objet==2)
+                                    {
+                                        ptr_possible=1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    printf("%d\n",*ptr_possible);
+                }
+                printf("%d\n",*ptr_possible);
+                if(ptr_possible==0)
+                {
+                    banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                    banquise[i][j].typeObjet->objet=2;
+                    *ptr_possible=0;
+                }
+                break;
+
+                case 3:
+                banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                banquise[i][j].typeObjet->objet=4;
+                break;
+                case 4:
+                banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                banquise[i][j].typeObjet->objet=5;
+                break;
+                default : break;
+            }
+            indice=-1;
+          }
         }
-        //Le glaçon est créer
       }
-
-  }
-
-  //RETURN
-
-
   return;
 }
 
@@ -149,33 +205,48 @@ T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur avec 4 maximum
         tab_joueur[i].identite=i+1;
         tab_joueur[i].position.x=0;
         tab_joueur[i].position.y=0;
-        tab_joueur[i].direction.dx=-1;
-        tab_joueur[i].direction.dy=-1;
+        tab_joueur[i].direction.dx=0;
+        tab_joueur[i].direction.dy=0;
         int score;
     }
     return tab_joueur;
 }
 void init_position_joueur(T_case **map,T_joueur *tableau_joueur,int taille_map,int nb_joueur,T_position *position_depart)
 {
+  for(int i=0;i<nb_joueur;i++)
+  {
+    switch (i)
+    {
+
+      case 0 :
+      map[(position_depart->x)-1][position_depart->y].occupe=(T_joueur*)(malloc(sizeof(T_joueur)));
       tableau_joueur[0].position.x=(position_depart->x)-1;
       tableau_joueur[0].position.y=position_depart->y;
       map[(position_depart->x)-1][position_depart->y].occupe=&tableau_joueur[0];
+      break;
+
+      case 1 :
+      map[(position_depart->x)][position_depart->y-1].occupe=(T_joueur*)(malloc(sizeof(T_joueur)));
       tableau_joueur[1].position.x=position_depart->x;
       tableau_joueur[1].position.y=(position_depart->y)-1;
       map[position_depart->x][(position_depart->y)-1].occupe=&tableau_joueur[1];
+      break;
+
+      case 2 :
+      map[(position_depart->x)+1][position_depart->y].occupe=(T_joueur*)(malloc(sizeof(T_joueur)));
       tableau_joueur[2].position.x=(position_depart->x)+1;
       tableau_joueur[2].position.y=position_depart->y;
       map[(position_depart->x)+1][position_depart->y].occupe=&tableau_joueur[2];
-      printf(" %d ", map[(position_depart->x)+1][position_depart->y].occupe->identite);
+      break;
+
+      case 3 :
+      map[(position_depart->x)][position_depart->y+1].occupe=(T_joueur*)(malloc(sizeof(T_joueur)));
       tableau_joueur[3].position.x=position_depart->x;
       tableau_joueur[3].position.y=(position_depart->y)+1;
       map[position_depart->x][(position_depart->y)+1].occupe=&tableau_joueur[3];
-      printf(" %d ", map[position_depart->x][(position_depart->y)+1].occupe->identite);
+      break;
 
-
-  /*
-    tableau_joueur[0].position.x=position_depart->x;
-    tableau_joueur[0].position.y=position_depart->y;
-    map[position_depart->x][position_depart->y].occupe=&tableau_joueur[0];
-  */
+    }
+  }
 }
+

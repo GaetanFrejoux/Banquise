@@ -11,7 +11,64 @@ void color(int t, int f)
 }
 void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
 {
-  //system("cls"); // clear le cmd
+    //system("cls"); // clear le cmd
+    for(int i=0;i<16;i++)
+    {
+        (i<10) ? color(15,i): color(0,i);
+        switch(i)
+        {
+        case 0 :
+        printf("Depart\n");
+        break;
+        case 1 :
+        printf("Il n'y a rien attribuer en bleu fonce\n");
+        break;
+        case 2 :
+        printf("Joueur 1\n");
+        break;
+        case 3 :
+        printf("Joueur 2\n");
+        break;
+        case 4 :
+        printf("Joueur 3\n");
+        break;
+        case 5 :
+        printf("Joueur 4\n");
+        break;
+        case 6 :
+        printf("Arrive\n");
+        break;
+        case 7 :
+        printf("Glacons\n");
+        break;
+        case 8 :
+        printf("Rocher\n");
+        break;
+        case 9 :
+        printf("Eau\n");
+        break;
+        case 10 :
+        printf("Baton Marteau\n");
+        break;
+        case 11 :
+        printf("Marteau\n");
+        break;
+        case 12 :
+        printf("Bord de la carte\n");
+        break;
+        case 13 :
+        printf("Piege\n");
+        break;
+        case 14 :
+        printf("Ressort\n");
+        break;
+        case 15 :
+        printf("Banquise\n");
+        break;
+
+
+        }
+    }
     int i, j;
     for(j=0; j<taille+2; j++)
     {
@@ -34,18 +91,49 @@ void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
                     }
                     else if(banquise[i-1][j-1].symbole=='D')
                     {
-                        color(0,8);
+                        color(15,0);
                         printf(" %c ", banquise[i-1][j-1].symbole);
                     }
                     else if (banquise[i-1][j-1].symbole=='A')
                     {
-                        color(0,6);
+                        color(15,6);
                         printf(" %c ", banquise[i-1][j-1].symbole);
                     }
                     else if (banquise[i-1][j-1].typeObjet!=NULL)
                     {
+                        switch(banquise[i-1][j-1].typeObjet->objet)
+                        {
+                        case 0 :
                         color(0,7);
                         printf("   ");
+                        break;
+
+                        case 1 :
+                        color(0,8);
+                        printf("   ");
+                        break;
+
+                        case 2 :
+                        color(0,10);
+                        printf("   ");
+                        break;
+
+                        case 3 :
+                        color(0,11);
+                        printf("   ");
+                        break;
+
+                        case 4 :
+                        color(0,13);
+                        printf("   ");
+                        break;
+
+                        case 5 :
+                        color(0,14);
+                        printf("   ");
+                        break;
+
+                        }
                     }
                     else
                     {
@@ -55,7 +143,7 @@ void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
                 } else
                 {
                     color(0,9);
-                    printf(" %c ", banquise[i-1][j-1].symbole);
+                    printf("   ", banquise[i-1][j-1].symbole);
                 }
             }
         }
@@ -154,7 +242,7 @@ void fonteDesGlaces(T_case **banquise, int **etatBanquise, int taille) // Foncti
             {
                 //Si oui, on tire un nombre aléatoire pour voir si elle peut fondre
                 fonteBanquise = rand() % 100; // Ici, la banquise à 5% de chance de fondre
-                if(fonteBanquise < 5) // On compare le nombre au pourcentage choisi, et si le nombre rentre dans le pourcentage :
+                if(fonteBanquise < 10) // On compare le nombre au pourcentage choisi, et si le nombre rentre dans le pourcentage :
                 {
                     banquise[i][j].etat = 0; //La banquise devient de l'eau
                     banquise[i][j].typeObjet = NULL; // Il n'y a plus d'objet sur la case
@@ -189,7 +277,7 @@ void glaconFond(T_case **banquise, int taille)  //Fonction permettant d'applique
             if(banquise[i][j].typeObjet == 0)  // Si on trouve un gla�on, il a 5% de chance de fondre
             {
                 fonteGlacon = rand() % 100; // On tire un nombre al�atoire entre 0 et 99
-                if(fonteGlacon < 5) // On le compare au pourcentage de chance de fonde du gla�on
+                if(fonteGlacon < 10) // On le compare au pourcentage de chance de fonde du gla�on
                 {
                     banquise[i][j].typeObjet = NULL; // Si il est dans le pourcentage, le gla�on fond.
                 }
@@ -252,4 +340,13 @@ void afficheCase( T_objet* unecase){
             break;
     }
 
+}
+
+void winner(T_case** banquise,T_position *ptr_case_arrive)
+{
+    if(banquise[ptr_case_arrive->x][ptr_case_arrive->y].occupe!=NULL)
+    {
+        printf("\nLe gagnant est : %s\n",banquise[ptr_case_arrive->x][ptr_case_arrive->y].occupe->nom);
+    }
+    return;
 }

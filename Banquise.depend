@@ -114,3 +114,32 @@
 	"banquise.h"
 	"initialisation.h"
 
+1582282067 source:c:\users\etuc2i\desktop\banquise-master\banquise-master\banquise.c
+	"banquise.h"
+
+1582273859 c:\users\etuc2i\desktop\banquise-master\banquise-master\banquise.h
+	"struct.h"
+
+1582280887 c:\users\etuc2i\desktop\banquise-master\banquise-master\struct.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<windows.h>
+
+1582283848 source:c:\users\etuc2i\desktop\banquise-master\banquise-master\initialisation.c
+	"initialisation.h"
+
+1582274330 c:\users\etuc2i\desktop\banquise-master\banquise-master\initialisation.h
+	"struct.h"
+
+1582276398 source:c:\users\etuc2i\desktop\banquise-master\banquise-master\main.c
+	"banquise.h"
+	"initialisation.h"
+
+1582274313 source:c:\users\etuc2i\desktop\banquise-master\banquise-master\tour.c
+	"tour.h"
+
+1582274134 c:\users\etuc2i\desktop\banquise-master\banquise-master\tour.h
+	"struct.h"
+
