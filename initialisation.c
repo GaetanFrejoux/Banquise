@@ -106,7 +106,7 @@ void apparition_objets(T_case **banquise, int taille) //Place des glacons de man
   int i,j,k, pourcentage=0;
   int indice= -1;
   int possible=0;
-  int *ptr_possible=&possible;
+  int possible_all=0;
   int nb_glacon=0,nb_rocher=0,nb_marteau=0,nb_piege=0;
   srand(time(NULL));
   //CODE
@@ -123,77 +123,88 @@ void apparition_objets(T_case **banquise, int taille) //Place des glacons de man
             indice=0;
             else if (pourcentage<10)
             indice=1;
-            else if (pourcentage<12)
+            else if (pourcentage<30)
             indice=2;
-            else if (pourcentage<18)
+            else if (pourcentage<35)
             indice=3;
-            else if (pourcentage<20)
+            else if (pourcentage<40)
             indice=4;
-            switch (indice)
+            if(indice!=-1)
             {
-                case 0:
-                banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
-                banquise[i][j].typeObjet->objet=0;
-                break;
-                case 1:
-                banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
-                banquise[i][j].typeObjet->objet=1;
-                break;
-                case 2:
-                if( i>2 && i<taille-2 && j>2 && j<taille-2 )
+                if( i>1 && i<taille-1 && j>1 && j<taille-1 )
                 {
-                    for(int a=-2;a<3;a++)
-                    {
-                      for(int b=-2;b<3;b++)
-                        {
-                            if( a>-2 && a<2 && b>-2 && b<2 )
+                    for(int a=i-1;a<i+2;a++)
+                    {   if (possible_all==1) break;
+                        for(int b=j-1;b<j+2;b++)
+                        {   if (possible_all==1) break;
+                            if(banquise[a][b].typeObjet!=NULL)
                             {
-                                if((banquise[i+a][j+b].occupe!=NULL) && (banquise[i+a][j+b].typeObjet!=NULL))
-                                {
-                                    ptr_possible=1;
-                                }
-                            }else
-                            {
-                                if((banquise[i+a][j+b].occupe!=NULL) && (banquise[i+a][j+b].typeObjet!=NULL))
-                                {
-                                    if (banquise[i+a][j+b].typeObjet->objet==2)
-                                    {
-                                        ptr_possible=1;
-                                    }
-                                }
+                                if(banquise[a][b].typeObjet->objet==2) possible_all=1;
                             }
                         }
                     }
-                    printf("%d\n",*ptr_possible);
                 }
-                printf("%d\n",*ptr_possible);
-                if(ptr_possible==0)
-                {
-                    banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
-                    banquise[i][j].typeObjet->objet=2;
-                    *ptr_possible=0;
-                }
-                break;
 
-                case 3:
-                banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
-                banquise[i][j].typeObjet->objet=4;
-                break;
-                case 4:
-                banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
-                banquise[i][j].typeObjet->objet=5;
-                break;
-                default : break;
+                if(possible_all==0)
+                {
+                    switch (indice)
+                    {
+                        case 0:
+                        banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                        banquise[i][j].typeObjet->objet=0;
+                        break;
+                        case 1:
+                        banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                        banquise[i][j].typeObjet->objet=1;
+                        break;
+                        case 2:
+                        if( i>2 && i<taille-2 && j>2 && j<taille-2 )
+                        {
+                            for(int a=i-2;a<i+3;a++)
+                            { if (possible==1) break;
+                                for(int b=j-2;b<j+3;b++)
+                                {
+                                    if (possible==1) break;
+                                    if(banquise[a][b].occupe!=NULL||banquise[a][b].typeObjet!=NULL)
+                                    {
+                                        possible=1;
+                                    }
+                                }
+                            }
+                            printf("%d\n",possible);
+                            if(possible==0)
+                            {
+                                banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                                banquise[i][j].typeObjet->objet=2;
+
+                            }
+                            possible=0;
+                        }
+                        break;
+
+                        case 3:
+                        banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                        banquise[i][j].typeObjet->objet=4;
+                        break;
+                        case 4:
+                        banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                        banquise[i][j].typeObjet->objet=5;
+                        break;
+                        default : break;
+                    }
+                }
+
             }
             indice=-1;
           }
+          possible_all=0;
         }
       }
   return;
 }
 
 
-T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur avec 4 maximum
+T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur
 {
     T_joueur *tab_joueur;
     tab_joueur =(T_joueur *)malloc(sizeof(T_joueur)*nb_joueur);
@@ -249,4 +260,3 @@ void init_position_joueur(T_case **map,T_joueur *tableau_joueur,int taille_map,i
     }
   }
 }
-

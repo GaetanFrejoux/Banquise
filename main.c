@@ -34,6 +34,8 @@ int main()
     fonteDesGlaces(banquise,etatBanquise,taille_banquise);
     fonteDesGlaces(banquise,etatBanquise,taille_banquise);
     affichageBanquise(banquise,taille_banquise);
+    tour_joueur(banquise,tableau_joueur);
+    affichageBanquise(banquise,taille_banquise);
     winner(banquise,ptr_case_arrive );
     return 0;
 }
