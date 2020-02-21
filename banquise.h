@@ -17,7 +17,7 @@ void majBanquise(T_case **banquise, int **etatBanquise, int taille); // Fonction
 void fonteDesGlaces(T_case **banquise, int **etatBanquise, int taille); // Fonction permettant d'appliquer la fonte des glaces du terrain FONCTION OK
 void glaconFond(T_case **banquise, int taille); //Fonction permettant d'appliquer la fonte aux gla�ons
 int totalDeGlacon(T_case **banquise, int taille); // Compte le nombre total de glaçons présents sur la banquise
-
+void winner(T_case** banquise,T_position *ptr_case_arrive); // Test si il y a un gagnant
 void afficheCase( T_objet* unecase);
 
 #endif // BANQUISE_H_INCLUDED
