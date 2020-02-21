@@ -14,6 +14,6 @@ void init_depart_arriver(T_case **map, int taille, T_position *ptr_case_depart, 
 T_joueur *init_joueur(int nb_joueur); //Creer un tableau de joueur avec 4 maximum
 void apparition_objets(T_case **banquise, int taille); //Place des glacons de manière aléatoire sur la banquise.
 void init_position_joueur(T_case **map,T_joueur *tableau_joueur,int taille_map,int nb_joueur,T_position *position_depart);
-int apparition_glacons(T_case **banquise, int taille); //Place des glacons de manière aléatoire sur la banquise.
+
 
 #endif // INITIALISATION_H_INCLUDED

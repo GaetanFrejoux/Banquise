@@ -68,10 +68,10 @@
 1582017326 source:c:\users\gfrejoux\desktop\banquise\initialisation.c
 	"initialisation.h"
 
-1582214291 source:c:\users\frejoux\documents\github\banquise\initialisation.c
+1582136036 source:c:\users\frejoux\documents\github\banquise\initialisation.c
 	"initialisation.h"
 
-1582213091 c:\users\frejoux\documents\github\banquise\initialisation.h
+1582115294 c:\users\frejoux\documents\github\banquise\initialisation.h
 	"struct.h"
 
 1582045818 c:\users\frejoux\documents\github\banquise\struct.h
@@ -81,14 +81,14 @@
 	<time.h>
 	<windows.h>
 
-1582206059 source:c:\users\frejoux\documents\github\banquise\main.c
+1582136310 source:c:\users\frejoux\documents\github\banquise\main.c
 	"banquise.h"
 	"initialisation.h"
 
-1582205917 c:\users\frejoux\documents\github\banquise\banquise.h
+1582131022 c:\users\frejoux\documents\github\banquise\banquise.h
 	"struct.h"
 
-1582205917 source:c:\users\frejoux\documents\github\banquise\banquise.c
+1582135190 source:c:\users\frejoux\documents\github\banquise\banquise.c
 	"banquise.h"
 
 1582198074 source:c:\users\etuc2i\desktop\banquise-master\banquise.c
@@ -113,4 +113,62 @@
 1582197130 source:c:\users\etuc2i\desktop\banquise-master\main.c
 	"banquise.h"
 	"initialisation.h"
+
+1582282067 source:c:\users\etuc2i\desktop\banquise-master\banquise-master\banquise.c
+	"banquise.h"
+
+1582273859 c:\users\etuc2i\desktop\banquise-master\banquise-master\banquise.h
+	"struct.h"
+
+1582280887 c:\users\etuc2i\desktop\banquise-master\banquise-master\struct.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<windows.h>
+
+1582283848 source:c:\users\etuc2i\desktop\banquise-master\banquise-master\initialisation.c
+	"initialisation.h"
+
+1582274330 c:\users\etuc2i\desktop\banquise-master\banquise-master\initialisation.h
+	"struct.h"
+
+1582276398 source:c:\users\etuc2i\desktop\banquise-master\banquise-master\main.c
+	"banquise.h"
+	"initialisation.h"
+
+1582274313 source:c:\users\etuc2i\desktop\banquise-master\banquise-master\tour.c
+	"tour.h"
+
+1582274134 c:\users\etuc2i\desktop\banquise-master\banquise-master\tour.h
+	"struct.h"
+
+1582284566 source:c:\users\frejoux\desktop\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise.c
+	"banquise.h"
+
+1582284566 c:\users\frejoux\desktop\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise.h
+	"struct.h"
+
+1582284566 c:\users\frejoux\desktop\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\struct.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<windows.h>
+
+1582284566 source:c:\users\frejoux\desktop\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\initialisation.c
+	"initialisation.h"
+
+1582284566 c:\users\frejoux\desktop\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\initialisation.h
+	"struct.h"
+
+1582284566 source:c:\users\frejoux\desktop\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\main.c
+	"banquise.h"
+	"initialisation.h"
+
+1582284566 source:c:\users\frejoux\desktop\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\tour.c
+	"tour.h"
+
+1582284566 c:\users\frejoux\desktop\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\tour.h
+	"struct.h"
 
