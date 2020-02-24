@@ -21,19 +21,11 @@ int main()
     apparition_objets(banquise, taille_banquise);
     //CODE
     nbGlacons = totalDeGlacon(banquise, taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    fonteDesGlaces(banquise,etatBanquise,taille_banquise);
-    affichageBanquise(banquise,taille_banquise);
-    winner(banquise,ptr_case_arrive );
+    while(winner(banquise,ptr_case_arrive)==0)
+    {
+        fonteDesGlaces(banquise,etatBanquise,taille_banquise);
+        affichageBanquise(banquise,taille_banquise);
+        tour_joueur(banquise,tableau_joueur);
+    }
     return 0;
 }

@@ -11,7 +11,7 @@ void color(int t, int f)
 }
 void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
 {
-    //system("cls"); // clear le cmd
+    system("cls"); // clear le cmd
     for(int i=0;i<16;i++)
     {
         (i<10) ? color(15,i): color(0,i);
@@ -342,11 +342,12 @@ void afficheCase( T_objet* unecase){
 
 }
 
-void winner(T_case** banquise,T_position *ptr_case_arrive)
+int winner(T_case** banquise,T_position *ptr_case_arrive)
 {
     if(banquise[ptr_case_arrive->x][ptr_case_arrive->y].occupe!=NULL)
     {
         printf("\nLe gagnant est : %s\n",banquise[ptr_case_arrive->x][ptr_case_arrive->y].occupe->nom);
+        return 1;
     }
-    return;
+    return 0;
 }
