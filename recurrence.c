@@ -4,7 +4,148 @@
 
 //FONCTIONS
 
-T_file creerFile()
+int **init_passage(int tailleBanquise)
+{
+    int i,j;
+    int **passage;
+    passage =(int **)malloc(sizeof(int *)*(tailleBanquise)); //On cr√©er un tableau pour savoir si l'on est d√©j√† pass√© par la (1) ou non (0)
+    for(i=0;i<tailleBanquise;i++)
+    {
+        passage[i] =(int *)malloc(sizeof(int)*(tailleBanquise));
+    }
+
+    for(j=0;j<tailleBanquise;j++) //On initialise toutes les cases √† 0
+    {
+        for(i=0;i<tailleBanquise;i++)
+        {
+            passage[i][j]=0;
+        }
+    }
+    return passage;
+}
+
+void remiseAZeroPassage(int **passage, int tailleBanquise)
+{
+    int i,j;
+    for(j=0;j<tailleBanquise;j++) //On initialise toutes les cases √† 0
+    {
+        for(i=0;i<tailleBanquise;i++)
+        {
+            passage[i][j]=0;
+        }
+    }
+}
+
+void finPossible(T_case **banquise, int tailleBanquise, int **passage, int i, int j)
+{
+    int retour = 0;
+
+    retour = finPossibleAuxiliaire(passage, banquise, i, j, tailleBanquise); // On appel la fonction auxiliaire pour tester les diff√©rents chemins possibles
+
+    if(retour == 1)
+    {
+        printf("\n\nIl y a une solution possible\n\n");
+    }
+    else if(retour == 0)
+    {
+        printf("\n\nIl n'y a pas de solution possible\n\n");
+    }
+    else
+    {
+        printf("\n\nERROR\n\n");
+    }
+
+    remiseAZeroPassage(passage, tailleBanquise);
+}
+
+int aijeLeDroit(int **passage, T_case **banquise, int i, int j)
+{
+  if(banquise[i][j].etat==1 && banquise[i][j].typeObjet!=NULL)
+  {
+    if((banquise[i][j].typeObjet->objet!=1) && (banquise[i][j].typeObjet->objet!=2) && (banquise[i][j].typeObjet->objet!=5) && (passage[i][j]==0))
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+  }
+  else
+  {
+    if((banquise[i][j].etat==1) && (passage[i][j]==0))
+    {
+      return 1;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+}
+
+int finPossibleAuxiliaire(int **passage, T_case **banquise, int i, int j, int tailleBanquise)
+{
+  int retour=0, x=i, y=j;
+  passage[i][j]=1;
+  if(banquise[i][j].checkpoint==2)
+  {
+    return 1;
+  }
+
+  if(i+1<tailleBanquise && (retour!=1))
+  {
+    x=i+1;
+    y = j;
+    if(aijeLeDroit(passage, banquise, x, y)==1)
+    {
+      retour = finPossibleAuxiliaire(passage, banquise, x, y, tailleBanquise);
+    }
+  }
+  if((i-1>=0) && (retour!=1))
+  {
+      x=i-1;
+      y = j;
+      if(aijeLeDroit(passage, banquise, x, y)==1)
+      {
+        retour = finPossibleAuxiliaire(passage, banquise, x, y, tailleBanquise);
+      }
+  }
+  if((j+1<tailleBanquise) && (retour!=1))
+  {
+      x = i;
+      y=j+1;
+      if(aijeLeDroit(passage, banquise, x, y)==1)
+      {
+        retour = finPossibleAuxiliaire(passage, banquise, x, y, tailleBanquise);
+      }
+  }
+  if((j-1>=0) && (retour!=1))
+  {
+      x = i;
+      y=j-1;
+      if(aijeLeDroit(passage, banquise, x, y)==1)
+      {
+        retour = finPossibleAuxiliaire(passage, banquise, x, y, tailleBanquise);
+      }
+  }
+  if(retour==0)
+  {
+    return 0;
+  }
+  else
+  {
+    return 1;
+  }
+}
+
+
+
+
+
+
+
+/*T_file creerFile()
 {
     T_file F;
     F.deb=F.fin=NULL;
@@ -43,7 +184,7 @@ void defiler(T_file *F)
     }
 }
 
-int dejaVu(T_file *chemin, int i, int j) //Regarde si on est dÈj‡ passÈ par la case i,j ou non. Si retourne 1 , oui, si 0, non
+int dejaVu(T_file *chemin, int i, int j) //Regarde si on est dÔøΩjÔøΩ passÔøΩ par la case i,j ou non. Si retourne 1 , oui, si 0, non
 {
     int retour = 0;
     T_cellule *celluleActuelle = chemin->deb;
@@ -60,10 +201,11 @@ int dejaVu(T_file *chemin, int i, int j) //Regarde si on est dÈj‡ passÈ par la c
 
 int finPossible(T_case **banquise, int i, int j, int tailleBanquise)
 /*
-Regarde si il existe un chemin pour aller d'un point donnÈe en coordonnÈes i, j, jusqu'‡ l'arrivÈe.
+Regarde si il existe un chemin pour aller d'un point donnÔøΩe en coordonnÔøΩes i, j, jusqu'ÔøΩ l'arrivÔøΩe.
 Si oui, il renvoie le nombre de coups minimum.
-Si non, il renvoie le nombre de glaÁon minimum nescessaire.
+Si non, il renvoie le nombre de glaÔøΩon minimum nescessaire.
 */
+/*
 {
     T_file chemin = creerFile();
     return finPossibleAuxiliaire(banquise, chemin, tailleBanquise, i, j);
@@ -102,15 +244,15 @@ Si non, il renvoie le nombre de glaÁon minimum nescessaire.
     else
     {
         return 0;
-    }*/
+    }*//*
 }
 
 
 int finPossibleAuxiliaire(T_case **banquise, T_file *chemin, int tailleBanquise, int i, int j)
 {
-    if(banquise[i][j].checkpoint==2) //On regarde si la case est celle d'arrivÈe
+    if(banquise[i][j].checkpoint==2) //On regarde si la case est celle d'arrivÔøΩe
     {
-        return 1; //A ce moment, si c'est la cas, on s'arrÍte et on retourne 1 (vrai)
+        return 1; //A ce moment, si c'est la cas, on s'arrÔøΩte et on retourne 1 (vrai)
     }
     else
     {
@@ -120,11 +262,11 @@ int finPossibleAuxiliaire(T_case **banquise, T_file *chemin, int tailleBanquise,
             Si la case suivante est de la glace
             et qu'il n'y a pas de rocher
             et qu'il n'y a pas d'axe de marteau
-            et qu'on est pas dÈj‡ passÈ par cette case
-            et que i ou j ne devienent pas infÈrieurs ou supÈrieurs aux limites de la carte,
+            et qu'on est pas dÔøΩjÔøΩ passÔøΩ par cette case
+            et que i ou j ne devienent pas infÔøΩrieurs ou supÔøΩrieurs aux limites de la carte,
             alors on continue de chercher des chemins
             */
-        {
+        /*{
             finPossibleAuxiliaire(banquise, chemin, tailleBanquise, i+1, j);
         }
         else if((banquise[i][j+1].etat==1) && (banquise[i][j+1].typeObjet->objet!=1) && (banquise[i][j+1].typeObjet->objet!=2) && (dejaVu(chemin, i, j+1)==0) && (j+1<tailleBanquise))
@@ -157,4 +299,4 @@ int finPossibleAuxiliaire(T_case **banquise, T_file *chemin, int tailleBanquise,
         }
     }
 
-}
+}*/

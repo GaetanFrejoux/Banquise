@@ -81,14 +81,15 @@
 	<time.h>
 	<windows.h>
 
-1582294784 source:c:\users\frejoux\documents\github\banquise\main.c
+1582627694 source:c:\users\frejoux\documents\github\banquise\main.c
 	"banquise.h"
 	"initialisation.h"
+	"recurrence.h"
 
-1582292462 c:\users\frejoux\documents\github\banquise\banquise.h
+1582555420 c:\users\frejoux\documents\github\banquise\banquise.h
 	"struct.h"
 
-1582292462 source:c:\users\frejoux\documents\github\banquise\banquise.c
+1582555420 source:c:\users\frejoux\documents\github\banquise\banquise.c
 	"banquise.h"
 
 1582198074 source:c:\users\etuc2i\desktop\banquise-master\banquise.c
@@ -172,10 +173,10 @@
 1582284566 c:\users\frejoux\desktop\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\tour.h
 	"struct.h"
 
-1582294998 source:c:\users\frejoux\documents\github\banquise\tour.c
+1582634069 source:c:\users\frejoux\documents\github\banquise\tour.c
 	"tour.h"
 
-1582294839 c:\users\frejoux\documents\github\banquise\tour.h
+1582627686 c:\users\frejoux\documents\github\banquise\tour.h
 	"struct.h"
 
 1582312320 source:c:\users\gaetan\desktop\banquise-debut_tour\banquise.c
@@ -206,4 +207,12 @@
 
 1582295103 c:\users\gaetan\desktop\banquise-debut_tour\tour.h
 	"struct.h"
+
+1582556277 c:\users\frejoux\documents\github\banquise\recurrence.h
+	"struct.h"
+	"banquise.h"
+	"initialisation.h"
+
+1582558496 source:c:\users\frejoux\documents\github\banquise\recurrence.c
+	"recurrence.h"
 

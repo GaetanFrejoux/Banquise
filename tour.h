@@ -6,7 +6,7 @@
 
 //PROTOTYPES
 
-void tour_joueur(T_case **banquise,T_joueur *tableau_joueur);
+void tour_joueur(T_case **banquise,T_joueur *tableau_joueur,int* indice_joueur, int nombre_joueur);
 
 
 
