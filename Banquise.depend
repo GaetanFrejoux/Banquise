@@ -68,27 +68,29 @@
 1582017326 source:c:\users\gfrejoux\desktop\banquise\initialisation.c
 	"initialisation.h"
 
-1582294085 source:c:\users\frejoux\documents\github\banquise\initialisation.c
+1582712457 source:c:\users\frejoux\documents\github\banquise\initialisation.c
 	"initialisation.h"
 
 1582292462 c:\users\frejoux\documents\github\banquise\initialisation.h
 	"struct.h"
 
-1582292462 c:\users\frejoux\documents\github\banquise\struct.h
+1582641967 c:\users\frejoux\documents\github\banquise\struct.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<time.h>
 	<windows.h>
 
-1582294784 source:c:\users\frejoux\documents\github\banquise\main.c
+1582746705 source:c:\users\frejoux\documents\github\banquise\main.c
 	"banquise.h"
 	"initialisation.h"
+	"recurrence.h"
+	"tour.h"
 
-1582292462 c:\users\frejoux\documents\github\banquise\banquise.h
+1582745832 c:\users\frejoux\documents\github\banquise\banquise.h
 	"struct.h"
 
-1582292462 source:c:\users\frejoux\documents\github\banquise\banquise.c
+1582746073 source:c:\users\frejoux\documents\github\banquise\banquise.c
 	"banquise.h"
 
 1582198074 source:c:\users\etuc2i\desktop\banquise-master\banquise.c
@@ -172,9 +174,46 @@
 1582284566 c:\users\frejoux\desktop\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\banquise-617fd792e5465674527a52e88e54a3c1652ea8a5\tour.h
 	"struct.h"
 
-1582294998 source:c:\users\frejoux\documents\github\banquise\tour.c
+1582746688 source:c:\users\frejoux\documents\github\banquise\tour.c
 	"tour.h"
 
-1582294839 c:\users\frejoux\documents\github\banquise\tour.h
+1582746664 c:\users\frejoux\documents\github\banquise\tour.h
 	"struct.h"
+
+1582312320 source:c:\users\gaetan\desktop\banquise-debut_tour\banquise.c
+	"banquise.h"
+
+1582312328 c:\users\gaetan\desktop\banquise-debut_tour\banquise.h
+	"struct.h"
+
+1582295103 c:\users\gaetan\desktop\banquise-debut_tour\struct.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<windows.h>
+
+1582295103 source:c:\users\gaetan\desktop\banquise-debut_tour\initialisation.c
+	"initialisation.h"
+
+1582295103 c:\users\gaetan\desktop\banquise-debut_tour\initialisation.h
+	"struct.h"
+
+1582458208 source:c:\users\gaetan\desktop\banquise-debut_tour\main.c
+	"banquise.h"
+	"initialisation.h"
+
+1582313112 source:c:\users\gaetan\desktop\banquise-debut_tour\tour.c
+	"tour.h"
+
+1582295103 c:\users\gaetan\desktop\banquise-debut_tour\tour.h
+	"struct.h"
+
+1582556277 c:\users\frejoux\documents\github\banquise\recurrence.h
+	"struct.h"
+	"banquise.h"
+	"initialisation.h"
+
+1582558496 source:c:\users\frejoux\documents\github\banquise\recurrence.c
+	"recurrence.h"
 

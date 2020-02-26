@@ -221,7 +221,7 @@ void majBanquise(T_case **banquise, int **etatBanquise, int taille) // Fonction 
     return;
 }
 
-void fonteDesGlaces(T_case **banquise, int **etatBanquise, int taille) // Fonction permettant d'appliquer la fonte des glaces du terrain FONCTION OK
+void fonteDesGlaces(T_case **banquise,T_joueur *tableau_joueur, int **etatBanquise, int taille) // Fonction permettant d'appliquer la fonte des glaces du terrain FONCTION OK
 {
     // VARIABLES
 
@@ -246,7 +246,10 @@ void fonteDesGlaces(T_case **banquise, int **etatBanquise, int taille) // Foncti
                 {
                     banquise[i][j].etat = 0; //La banquise devient de l'eau
                     banquise[i][j].typeObjet = NULL; // Il n'y a plus d'objet sur la case
-                    banquise[i][j].occupe = NULL; // Il n'y a plus de joueur
+                    if(banquise[i][j].occupe!=NULL)
+                    {
+                      tableau_joueur[banquise[i][j].occupe->representation].etat=0;
+                    }
                     banquise[i][j].symbole = 'E'; // Le symbole change
                 }
             }
@@ -321,7 +324,8 @@ int totalDeGlacon(T_case **banquise, int taille) // Compte le nombre total de gl
 }
 
 
-void afficheCase( T_objet* unecase){
+void afficheCase( T_objet* unecase)
+{
     switch(unecase->objet){
         case glacon_obj : //, rocher, marteauAxe, marteauTete, piege
             printf("\nG\n");
@@ -342,11 +346,250 @@ void afficheCase( T_objet* unecase){
 
 }
 
-void winner(T_case** banquise,T_position *ptr_case_arrive)
+int winner(T_case** banquise,T_position *ptr_case_arrive)
 {
     if(banquise[ptr_case_arrive->x][ptr_case_arrive->y].occupe!=NULL)
     {
         printf("\nLe gagnant est : %s\n",banquise[ptr_case_arrive->x][ptr_case_arrive->y].occupe->nom);
+        return 1;
+    }
+    return 0;
+}
+
+int numeroCasGlacon(T_case **banquise, int i, int j, int directionX, int directionY, int tailleBanquise) //Cette fonction donne un vecteur de déplacement au glaçon en fonction de ce qu'il va rencontrer
+/*
+Fonction qui indique le retour d'un glaçon qui se déplace:
+0 : le glaçon reste sur Place
+1 : le glaçon se déplace normalement
+2 : le glaçon reste sur place et la tête de marteau va se déplacer.
+3 : le glaçon effectue encore un déplacement et s'arrête à l'endroit du piège, en le remplaçant
+4 : le glaçon rencontre un ressort, il va donc changer de sens
+*/
+{
+  int retour = 0;
+
+
+  if(directionX==-1)
+  {
+    if(i-1<0) // Si la case d'après est hors de la zone de la banquise, le glaçon peut s'y déplacer
+    {
+      retour = 1;
+    }
+    else if(banquise[i-1][j].typeObjet==NULL) // Si il n'y a pas d'objet sur la case d'après, le glaçon peut s'y déplacer
+    {
+      retour = 1;
+    }
+    else if((banquise[i-1][j].typeObjet->objet==0) || (banquise[i-1][j].typeObjet->objet==1) || (banquise[i-1][j].typeObjet->objet==2)) //Si il y a un autre glaçon, un rocher ou l'axe d'un marteau sur la case d'après, le glaçon ne peut pas s'y déplacer.
+    {
+      retour = 0;
+    }
+    else if(banquise[i-1][j].typeObjet->objet==3) //Si le glaçon rencontre une tête de marteau,
+    {
+      if(banquise[i-2][j].typeObjet->objet==2) // Si c'est sur le coté dans le prolongement de l'axe, le glaçon s'arrète
+      {
+        retour = 0;
+      }
+      else // Si c'est sur l'un des deux autres côtés
+      {
+        retour = 2;
+      }
+    }
+    else if(banquise[i-1][j].typeObjet->objet==4)
+    {
+      retour = 3;
+    }
+    else if(banquise[i-1][j].typeObjet->objet==5)
+    {
+      retour = 4;
+    }
+    else
+    {
+      printf("\n\n\nERROR\n\n\n");
+    }
+  }
+
+
+  if(directionX==+1)
+  {
+    if(i+1>=tailleBanquise) // Si la case d'après est hors de la zone de la banquise, le glaçon peut s'y déplacer
+    {
+      retour = 1;
+    }
+    else if(banquise[i+1][j].typeObjet==NULL) // Si il n'y a pas d'objet sur la case d'après, le glaçon peut s'y déplacer
+    {
+      retour = 1;
+    }
+    else if((banquise[i+1][j].typeObjet->objet==0) || (banquise[i-1][j].typeObjet->objet==1) || (banquise[i-1][j].typeObjet->objet==2)) //Si il y a un autre glaçon, un rocher ou l'axe d'un marteau sur la case d'après, le glaçon ne peut pas s'y déplacer.
+    {
+      retour = 0;
+    }
+    else if(banquise[i+1][j].typeObjet->objet==3) //Si le glaçon rencontre une tête de marteau,
+    {
+      if(banquise[i+2][j].typeObjet->objet==2) // Si c'est sur le coté dans le prolongement de l'axe, le glaçon s'arrète
+      {
+        retour = 0;
+      }
+      else // Si c'est sur l'un des deux autres côtés
+      {
+        retour = 2;
+      }
+    }
+    else if(banquise[i+1][j].typeObjet->objet==4)
+    {
+      retour = 3;
+    }
+    else if(banquise[i+1][j].typeObjet->objet==5)
+    {
+      retour = 4;
+    }
+    else
+    {
+      printf("\n\n\nERROR\n\n\n");
+    }
+
+  }
+
+
+  if(directionY==-1)
+  {
+    if(j-1<0) // Si la case d'après est hors de la zone de la banquise, le glaçon peut s'y déplacer
+    {
+      retour = 1;
+    }
+    else if(banquise[i][j-1].typeObjet==NULL) // Si il n'y a pas d'objet sur la case d'après, le glaçon peut s'y déplacer
+    {
+      retour = 1;
+    }
+    else if((banquise[i][j-1].typeObjet->objet==0) || (banquise[i-1][j].typeObjet->objet==1) || (banquise[i-1][j].typeObjet->objet==2)) //Si il y a un autre glaçon, un rocher ou l'axe d'un marteau sur la case d'après, le glaçon ne peut pas s'y déplacer.
+    {
+      retour = 0;
+    }
+    else if(banquise[i][j-1].typeObjet->objet==3) //Si le glaçon rencontre une tête de marteau,
+    {
+      if(banquise[i][j-2].typeObjet->objet==2) // Si c'est sur le coté dans le prolongement de l'axe, le glaçon s'arrète
+      {
+        retour = 0;
+      }
+      else // Si c'est sur l'un des deux autres côtés
+      {
+        retour = 2;
+      }
+    }
+    else if(banquise[i][j-1].typeObjet->objet==4)
+    {
+      retour = 3;
+    }
+    else if(banquise[i][j-1].typeObjet->objet==5)
+    {
+      retour = 4;
+    }
+    else
+    {
+      printf("\n\n\nERROR\n\n\n");
+    }
+
+  }
+
+
+  if(directionY==+1)
+  {
+    if(j+1>=tailleBanquise) // Si la case d'après est hors de la zone de la banquise, le glaçon peut s'y déplacer
+    {
+      retour = 1;
+    }
+    else if(banquise[i][j+1].typeObjet==NULL) // Si il n'y a pas d'objet sur la case d'après, le glaçon peut s'y déplacer
+    {
+      retour = 1;
+    }
+    else if((banquise[i][j+1].typeObjet->objet==0) || (banquise[i-1][j].typeObjet->objet==1) || (banquise[i-1][j].typeObjet->objet==2)) //Si il y a un autre glaçon, un rocher ou l'axe d'un marteau sur la case d'après, le glaçon ne peut pas s'y déplacer.
+    {
+      retour = 0;
+    }
+    else if(banquise[i][j+1].typeObjet->objet==3) //Si le glaçon rencontre une tête de marteau,
+    {
+      if(banquise[i][j+2].typeObjet->objet==2) // Si c'est sur le coté dans le prolongement de l'axe, le glaçon s'arrète
+      {
+        retour = 0;
+      }
+      else // Si c'est sur l'un des deux autres côtés
+      {
+        retour = 2;
+      }
+    }
+    else if(banquise[i][j+1].typeObjet->objet==4)
+    {
+      retour = 3;
+    }
+    else if(banquise[i][j+1].typeObjet->objet==5)
+    {
+      retour = 4;
+    }
+    else
+    {
+      printf("\n\n\nERROR\n\n\n");
+    }
+
+  }
+
+  return retour;
+
+}
+
+void vecteurGlacon(T_case **banquise, int i, int j, int directionX, int directionY, int tailleBanquise)
+{
+    int cas = numeroCasGlacon(banquise, i, j, directionX, directionY, tailleBanquise);
+    switch(cas)
+    {
+    case 0 :
+        banquise[i][j].typeObjet->vecteur.dx=banquise[i][j].typeObjet->vecteur.dy=0;
+        break;
+
+    case 1 :
+        banquise[i][j].typeObjet->vecteur.dx=directionX;
+        banquise[i][j].typeObjet->vecteur.dy=directionY;
+        break;
+
+    case 2 :
+        banquise[i][j].typeObjet->vecteur.dx=0;
+        banquise[i][j].typeObjet->vecteur.dy=0;
+        /*
+        cas du marteau a gerer
+        */
+        break;
+
+    case 3 :
+        /*
+        cas particulier du ressort
+        */
+        break;
+
+    case 4 :
+        banquise[i][j].typeObjet->vecteur.dx=-directionX;
+        banquise[i][j].typeObjet->vecteur.dy=-directionY;
+        break;
+
+    default :
+        printf("\n\nERROR : vecteurGlacon\n\n");
+    }
+}
+
+void deplacementGlacon(T_case **banquise, int i, int j, int directionX, int directionY, int tailleBanquise) //Cette fonction réalise le déplacement du glaçon et si le glaçon rencontre un joueur, appel une fonction de mort du joueur
+{
+    if((i+directionX <0) || (j+directionY<0)  || (i+directionX>=tailleBanquise)  || (j+directionY>= tailleBanquise))
+        //Si le glaçon sort de la zone de jeu, il est supprimé
+    {
+        banquise[i][j].typeObjet=NULL;
+    }
+    else
+        //Si le glaçon ne sort pas de la zone de jeu, on calcul son nouveau vecteur et on lui applique un déplacement
+    {
+        vecteurGlacon(banquise, i, j, directionX, directionY, tailleBanquise);
+        banquise[i+banquise[i][j].typeObjet->vecteur.dx][j+banquise[i][j].typeObjet->vecteur.dy].typeObjet=(T_objet*)malloc(sizeof(T_objet));
+        banquise[i+banquise[i][j].typeObjet->vecteur.dx][j+banquise[i][j].typeObjet->vecteur.dy].typeObjet=banquise[i][j].typeObjet;
+        banquise[i][j].typeObjet=NULL;
+        /*
+        fonction pour voir si rencontre joueur
+        */
     }
     return;
 }

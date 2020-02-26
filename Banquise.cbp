@@ -42,6 +42,10 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="recurrence.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="recurrence.h" />
 		<Unit filename="struct.h" />
 		<Unit filename="tour.c">
 			<Option compilerVar="CC" />

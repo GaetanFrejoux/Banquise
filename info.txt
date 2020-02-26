@@ -17,3 +17,6 @@ couleur :
 13: rose fluo ->
 14: jaune fluo ->
 15: blanc -> banquise
+
+
+quand on a de l'eau qui apparait sur un joueur, le joueur disparait car le joueur est écrasé.
