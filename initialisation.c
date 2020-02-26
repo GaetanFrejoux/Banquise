@@ -117,7 +117,7 @@ void apparition_objets(T_case **banquise, int taille) //Place des glacons de man
       {
 
         pourcentage = rand() % 100; //A chaque case, on tire un nombre au sort pour savoir si l'on pose un objet ou non
-        if((banquise[i][j].occupe==NULL) && (banquise[i][j].typeObjet==NULL))
+        if((banquise[i][j].occupe==NULL) && (banquise[i][j].typeObjet==NULL) && banquise[i][j].checkpoint==0)
         {
             if(pourcentage<5)
             indice=0;
@@ -175,7 +175,9 @@ void apparition_objets(T_case **banquise, int taille) //Place des glacons de man
                             if(possible==0)
                             {
                                 banquise[i][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
+                                banquise[i+1][j].typeObjet=(T_objet*)(malloc(sizeof(T_objet)));
                                 banquise[i][j].typeObjet->objet=2;
+                                banquise[i+1][j].typeObjet->objet=3;
 
                             }
                             possible=0;
@@ -218,10 +220,12 @@ T_joueur *init_joueur(int nb_joueur) //Creer un tableau de joueur
         tab_joueur[i].position.y=0;
         tab_joueur[i].direction.dx=0;
         tab_joueur[i].direction.dy=0;
+        tab_joueur[i].etat=1;
         int score;
     }
     return tab_joueur;
 }
+
 void init_position_joueur(T_case **map,T_joueur *tableau_joueur,int taille_map,int nb_joueur,T_position *position_depart)
 {
   for(int i=0;i<nb_joueur;i++)

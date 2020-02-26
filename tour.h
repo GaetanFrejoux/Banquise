@@ -5,9 +5,9 @@
 #include "struct.h"
 
 //PROTOTYPES
-
-void tour_joueur(T_case **banquise,T_joueur *tableau_joueur,int* indice_joueur, int nombre_joueur);
-
-
+T_case case_adjacente(T_case **banquise,T_joueur *tableau_joueur,int* indice_joueur,int tailleBanquise,int x,int y);
+int joueur_vivant(T_case **banquise,T_joueur *tableau_joueur,int* indice_joueur, int nombre_joueur,int* nombre_morts);
+void tour_joueur(T_case **banquise,T_joueur *tableau_joueur,int* indice_joueur, int nombre_joueur, int tailleBanquise);
+void qui_est_mort(T_case **banquise,T_joueur *tableau_joueur,int nombre_joueur);
 
 #endif // TOUR_H_INCLUDED
