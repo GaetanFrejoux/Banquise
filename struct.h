@@ -46,6 +46,7 @@ typedef struct
     T_position position;
     T_vecteur direction;
     int score;
+    int passeTour; // Si passeTour est à 0, le joueur peut jouer son tour normalement, si il est à 1, il doit passer son tour (piège)
     T_etat etat;
 }T_joueur;  // D�fini un joueur
 
