@@ -3,7 +3,7 @@
 #include "recurrence.h"
 
 //FONCTIONS
-
+//fonction permettant de savoir si nous sommes deja passé par une case pour les fonctions recursive
 int **init_passage(int tailleBanquise)
 {
     int i,j;
@@ -23,8 +23,8 @@ int **init_passage(int tailleBanquise)
     }
     return passage;
 }
-
-void remiseAZeroPassage(int **passage, int tailleBanquise)
+//fonction qui remet a 0 toutes les case.
+void remiseAZeroPassage(int **passage, int tailleBanquise) // On a eu besoin de cette fonction dans une ancienne version de finPossible
 {
     int i,j;
     for(j=0;j<tailleBanquise;j++) //On initialise toutes les cases à 0
@@ -35,10 +35,12 @@ void remiseAZeroPassage(int **passage, int tailleBanquise)
         }
     }
 }
-
-void finPossible(T_case **banquise, int tailleBanquise, int **passage, int i, int j)
+//fonction qui permet de tester si une fin est possible
+void finPossible(T_case **banquise, int tailleBanquise, int i, int j) // On regarde si on peut rejoindre l'arrivée à partir de la position i, j
 {
     int retour = 0;
+
+    int **passage=init_passage(tailleBanquise);
 
     retour = finPossibleAuxiliaire(passage, banquise, i, j, tailleBanquise); // On appel la fonction auxiliaire pour tester les différents chemins possibles
 
@@ -55,9 +57,9 @@ void finPossible(T_case **banquise, int tailleBanquise, int **passage, int i, in
         printf("\n\nERROR\n\n");
     }
 
-    remiseAZeroPassage(passage, tailleBanquise);
+    /*remiseAZeroPassage(passage, tailleBanquise);*/
 }
-
+//fonction qui permet de savoir s'il est possible de se deplacer dans cette case
 int aijeLeDroit(int **passage, T_case **banquise, int i, int j)
 {
   if(banquise[i][j].etat==1 && banquise[i][j].typeObjet!=NULL)
@@ -83,14 +85,14 @@ int aijeLeDroit(int **passage, T_case **banquise, int i, int j)
     }
   }
 }
-
+//fonction auxiliaire de fin possible
 int finPossibleAuxiliaire(int **passage, T_case **banquise, int i, int j, int tailleBanquise)
 {
   int retour=0, x=i, y=j;
   passage[i][j]=1;
   if(banquise[i][j].checkpoint==2)
   {
-    return 1;
+    retour = 1;
   }
 
   if(i+1<tailleBanquise && (retour!=1))
@@ -129,174 +131,198 @@ int finPossibleAuxiliaire(int **passage, T_case **banquise, int i, int j, int ta
         retour = finPossibleAuxiliaire(passage, banquise, x, y, tailleBanquise);
       }
   }
-  if(retour==0)
+
+  return retour;
+
+}
+//fonction auxiliaire de finPossibleEau
+int finPossibleEauAuxiliaire(int **passageEau, T_case **banquise, int i, int j, int tailleBanquise)
+{
+  int retour=0, x=i, y=j;
+  passageEau[i][j]=1;
+  if(banquise[i][j].checkpoint==2)
   {
-    return 0;
+    retour = 1;
   }
-  else
+
+  if(i+1<tailleBanquise && (retour!=1))
   {
-    return 1;
+    x=i+1;
+    y = j;
+    if(passageEau[x][y]==0)
+    {
+      retour = finPossibleEauAuxiliaire(passageEau, banquise, x, y, tailleBanquise);
+    }
   }
+  if((i-1>=0) && (retour!=1))
+  {
+      x=i-1;
+      y = j;
+      if(passageEau[x][y]==0)
+      {
+        retour = finPossibleEauAuxiliaire(passageEau, banquise, x, y, tailleBanquise);
+      }
+  }
+  if((j+1<tailleBanquise) && (retour!=1))
+  {
+      x = i;
+      y=j+1;
+      if(passageEau[x][y]==0)
+      {
+        retour = finPossibleEauAuxiliaire(passageEau, banquise, x, y, tailleBanquise);
+      }
+  }
+  if((j-1>=0) && (retour!=1))
+  {
+      x = i;
+      y=j-1;
+      if(passageEau[x][y]==0)
+      {
+        retour = finPossibleEauAuxiliaire(passageEau, banquise, x, y, tailleBanquise);
+      }
+  }
+
+  return retour;
+
 }
-
-
-
-
-
-
-
-/*T_file creerFile()
+//fonction qui initialise une matrice pour savoir si il existe un passageEau
+int **initPassageEau(T_case **banquise, int tailleBanquise)
 {
-    T_file F;
-    F.deb=F.fin=NULL;
-    return F;
-}
-
-void enfiler(T_file *F, int i, int j)
-{
-    T_cellule *nouveau=(T_cellule *)malloc(sizeof(T_cellule));
-    nouveau->x=i;
-    nouveau->y=j;
-    nouveau->suivant=NULL;
-    if(F->deb==NULL)
+    int i, j;
+    int **passageEau;
+    passageEau =(int **)malloc(sizeof(int *)*(tailleBanquise)); //On créer un tableau pour savoir si l'on est déjà passé par la (1) ou non (0)
+    for(i=0;i<tailleBanquise;i++)
     {
-        F->deb=nouveau;
-        F->fin=nouveau;
+        passageEau[i] =(int *)malloc(sizeof(int)*(tailleBanquise));
     }
-    else
-    {
-        F->fin->suivant=nouveau;
-        F->fin=nouveau;
-    }
-}
 
-void defiler(T_file *F)
-{
-    T_cellule *tmp=F->deb;
-    if(F->deb!=NULL)
+
+    for(j=0; j<tailleBanquise; j++)
     {
-        F->deb=F->deb->suivant;
-        free (tmp);
-        if(F->deb==NULL)
+        for(i=0; i<tailleBanquise; i++)
         {
-            F->fin=NULL;
+            if(banquise[i][j].etat==0)
+            {
+                passageEau[i][j]=-1; // -1 indique que la case est de l'eau
+            }
+            else if(banquise[i][j].etat==1)
+            {
+                if(banquise[i][j].typeObjet==NULL)
+                {
+                    passageEau[i][j]=0; // 0 Indique de la glace libre où avec un objet que l'on peut déplacer
+                }
+                else if(banquise[i][j].typeObjet!=NULL)
+                {
+                    if((banquise[i][j].typeObjet->objet==1) || (banquise[i][j].typeObjet->objet==2) || (banquise[i][j].typeObjet->objet==5))
+                    {
+                        passageEau[i][j]=-2; // -2 indique que la case est un objet que l'on ne peut déplacer
+                    }
+                    else
+                    {
+                        passageEau[i][j]=0;
+                    }
+                }
+            }
+
+        }
+    }
+
+    return passageEau;
+}
+//fonction qui creer un nouveau passage
+void nouveauPassage(int **passageEau, int **sauvegardePassage, int tailleBanquise)
+{
+    int i, j;
+    for(j=0; j<tailleBanquise; j++)
+    {
+        for(i=0; i<tailleBanquise; i++)
+        {
+            passageEau[i][j] = sauvegardePassage[i][j];
         }
     }
 }
-
-int dejaVu(T_file *chemin, int i, int j) //Regarde si on est d�j� pass� par la case i,j ou non. Si retourne 1 , oui, si 0, non
+//fonction qui permet de savoir s'il est possible d'agrandir la surface
+void peutOnAgrandir(int **sauvegardePassage, int i, int j, int tailleBanquise)
 {
+    if(i-1>=0)
+    {
+        if(sauvegardePassage[i-1][j]==-1) // Si on trouve une case qui est de l'eau
+        {
+            sauvegardePassage[i-1][j]=0; // On la considère comme de la glace, en suposant qu'on utilise un glaçon pour la combler
+        }
+    }
+    if(i+1<tailleBanquise)
+    {
+        if(sauvegardePassage[i+1][j]==-1) // Si on trouve une case qui est de l'eau
+        {
+            sauvegardePassage[i+1][j]=0; // On la considère comme de la glace, en suposant qu'on utilise un glaçon pour la combler
+        }
+    }
+    if(i-1>=0)
+    {
+        if(sauvegardePassage[i][j-1]==-1) // Si on trouve une case qui est de l'eau
+        {
+            sauvegardePassage[i][j-1]=0; // On la considère comme de la glace, en suposant qu'on utilise un glaçon pour la combler
+        }
+    }
+    if(i+1<tailleBanquise)
+    {
+        if(sauvegardePassage[i][j+1]==-1) // Si on trouve une case qui est de l'eau
+        {
+            sauvegardePassage[i][j+1]=0; // On la considère comme de la glace, en suposant qu'on utilise un glaçon pour la combler
+        }
+    }
+}
+//fonction qui agrandit la surface
+void augmentationSurfaceUtilise(int **passageEau, int **sauvegardePassage, int tailleBanquise)
+{
+    int i, j;
+    for(j=0; j<tailleBanquise; j++)
+    {
+        for(i=0; i<tailleBanquise; i++)
+        {
+            if(passageEau[i][j]==1) // Si une case a était utilisé pour calculer un chemin, on regarde si ses cases adjacentes sont de l'eau ou non Si oui, on les considèrent comme de la glace en supposant qu'on utilise un glaçon
+            {
+                peutOnAgrandir(sauvegardePassage, i, j, tailleBanquise);
+            }
+        }
+    }
+}
+//fonction qui test si il existe une fin possible avec de l'eau
+int finPossibleEau(T_case **banquise, int tailleBanquise, int i, int j)
+{
+    int **passageEau = initPassageEau(banquise, tailleBanquise);
+    int **sauvegardePassage = initPassageEau(banquise, tailleBanquise);
+    int caseEauUtilise = 0;
     int retour = 0;
-    T_cellule *celluleActuelle = chemin->deb;
-    while(celluleActuelle != NULL)
+    do
     {
-        if((celluleActuelle->x==i) && (celluleActuelle->y==j))
+        retour = finPossibleEauAuxiliaire(passageEau, banquise, i, j, tailleBanquise);
+        if(retour==0)
         {
-            retour = 1;
+            caseEauUtilise = caseEauUtilise+1;
+            augmentationSurfaceUtilise(passageEau, sauvegardePassage, tailleBanquise);
+            nouveauPassage(passageEau, sauvegardePassage, tailleBanquise);
         }
-        celluleActuelle = celluleActuelle->suivant;
-    }
-    return retour;
-}
+    }while(retour==0);
 
-int finPossible(T_case **banquise, int i, int j, int tailleBanquise)
-/*
-Regarde si il existe un chemin pour aller d'un point donn�e en coordonn�es i, j, jusqu'� l'arriv�e.
-Si oui, il renvoie le nombre de coups minimum.
-Si non, il renvoie le nombre de gla�on minimum nescessaire.
-*/
-/*
+    return caseEauUtilise;
+}
+//fonction general qui effectue le test d'une fin possible ?
+void peutOnFinir(T_case **banquise, int tailleBanquise, T_joueur *tableau_joueur, int numeroJoueur)
 {
-    T_file chemin = creerFile();
-    return finPossibleAuxiliaire(banquise, chemin, tailleBanquise, i, j);
-    /*if((banquise[i+1][j].etat==1) && (banquise[i+1][j].typeObjet->objet!=1) && (banquise[i+1][j].typeObjet->objet!=2))
+    int nbGlaconRestant = totalDeGlacon(banquise, tailleBanquise);
+    int nbGlaconNescessaire = finPossibleEau(banquise, tailleBanquise, tableau_joueur[numeroJoueur].position.x, tableau_joueur[numeroJoueur].position.y);
+    if(nbGlaconNescessaire==0)
     {
-        T_file a = creerFile();
-        if(finPossibleAuxiliaire(banquise, a, tailleBanquise, i+1, j)==1)
-        {
-            return 1;
-        }
+        printf("\n\nLe joueur %d peut rejoindre l'arrivee sans transformer de case\n\n", numeroJoueur);
     }
-    else if((banquise[i][j+1].etat==1) && (banquise[i][j+1].typeObjet->objet!=1) && (banquise[i][j+1].typeObjet->objet!=2))
+    else if(nbGlaconRestant - nbGlaconNescessaire >= 0)
     {
-        T_file b = creerFile();
-        if(finPossibleAuxiliaire(banquise, b, tailleBanquise, i, j+1)==1)
-        {
-            return 1;
-        }
-    }
-    else if((banquise[i-1][j].etat==1) && (banquise[i-1][j].typeObjet->objet!=1) && (banquise[i-1][j].typeObjet->objet!=2))
-    {
-        T_file c = creerFile();
-        if(finPossibleAuxiliaire(banquise, c, tailleBanquise, i-1, j)==1)
-        {
-            return 1;
-        }
-    }
-    else if((banquise[i][j-1].etat==1) && (banquise[i][j-1].typeObjet->objet!=1) && (banquise[i][j-1].typeObjet->objet!=2))
-    {
-        T_file d = creerFile();
-        if(finPossibleAuxiliaire(banquise, d, tailleBanquise, i, j-1)==1)
-        {
-            return 1;
-        }
+        printf("\n\nLe joueur %d peut rejoindre l'arrivee. Pour cela, il faut transformer %d case d'eau en glace avec des glacon\n\n", numeroJoueur, nbGlaconNescessaire);
     }
     else
     {
-        return 0;
-    }*//*
+        printf("\n\nLe joueur %d ne peut pas rejoindre l'arrivee. Il n'y a pas assez de glacons\n\n", numeroJoueur);
+    }
 }
-
-
-int finPossibleAuxiliaire(T_case **banquise, T_file *chemin, int tailleBanquise, int i, int j)
-{
-    if(banquise[i][j].checkpoint==2) //On regarde si la case est celle d'arriv�e
-    {
-        return 1; //A ce moment, si c'est la cas, on s'arr�te et on retourne 1 (vrai)
-    }
-    else
-    {
-        enfiler(chemin, i, j);
-        if((banquise[i+1][j].etat==1) && (banquise[i+1][j].typeObjet->objet!=1) && (banquise[i+1][j].typeObjet->objet!=2) && (dejaVu(chemin, i+1, j)==0) && (i+1<tailleBanquise))
-            /*
-            Si la case suivante est de la glace
-            et qu'il n'y a pas de rocher
-            et qu'il n'y a pas d'axe de marteau
-            et qu'on est pas d�j� pass� par cette case
-            et que i ou j ne devienent pas inf�rieurs ou sup�rieurs aux limites de la carte,
-            alors on continue de chercher des chemins
-            */
-        /*{
-            finPossibleAuxiliaire(banquise, chemin, tailleBanquise, i+1, j);
-        }
-        else if((banquise[i][j+1].etat==1) && (banquise[i][j+1].typeObjet->objet!=1) && (banquise[i][j+1].typeObjet->objet!=2) && (dejaVu(chemin, i, j+1)==0) && (j+1<tailleBanquise))
-        {
-            while((chemin->fin.x!=i) && (chemin->fin.y!=j))
-            {
-                defiler(chemin);
-            }
-            finPossibleAuxiliaire(banquise, chemin, tailleBanquise, i, j+1);
-        }
-        else if((banquise[i-1][j].etat==1) && (banquise[i-1][j].typeObjet->objet!=1) && (banquise[i-1][j].typeObjet->objet!=2) && (dejaVu(chemin, i-1, j)==0) && (i-1>-1))
-        {
-            while((chemin->fin.x!=i) && (chemin->fin.y!=j))
-            {
-                defiler(chemin);
-            }
-            finPossibleAuxiliaire(banquise, chemin, tailleBanquise, i-1, j);
-        }
-        else if((banquise[i][j-1].etat==1) && (banquise[i][j-1].typeObjet->objet!=1) && (banquise[i][j-1].typeObjet->objet!=2) && (dejaVu(chemin, i, j-1)==0) && (j-1>-1))
-        {
-            while((chemin->fin.x!=i) && (chemin->fin.y!=j))
-            {
-                defiler(chemin);
-            }
-            finPossibleAuxiliaire(banquise, chemin, tailleBanquise, i, j-1);
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
-}*/

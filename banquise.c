@@ -4,15 +4,18 @@
 
 //FONCTIONS
 
+// choisi la couleur de fond et du texte
 void color(int t, int f)
 {
     HANDLE H=GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(H,f*16+t);
 }
-void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
+
+ // Affiche la banquise
+void affichageBanquise(T_case **banquise, int taille)
 {
     //system("cls"); // clear le cmd
-    for(int i=0;i<16;i++)
+    for(int i=0;i<16;i++) //boucle pour tous les cas de couleurs
     {
         (i<10) ? color(15,i): color(0,i);
         switch(i)
@@ -70,7 +73,7 @@ void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
         }
     }
     int i, j;
-    for(j=0; j<taille+2; j++)
+    for(j=0; j<taille+2; j++) //boucle d'affiche
     {
         printf("\n");
         for(i=0;i<taille+2; i++)
@@ -124,7 +127,7 @@ void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
                         break;
 
                         case 4 :
-                        color(0,13);
+                        color(0,15);
                         printf("   ");
                         break;
 
@@ -153,7 +156,8 @@ void affichageBanquise(T_case **banquise, int taille)  // Affiche la banquise
     return;
 }
 
-void affichageEtatBanquise(int **etatBanquise, int taille)  // Affiche la matrice de l'�tat de la banquise FONCTION OK
+ // Affiche la matrice de l'état de la banquise
+void affichageEtatBanquise(int **etatBanquise, int taille)
 {
     int i, j;
     for(j=0; j<taille+2; j++) //On fait un affichage de toute la banquise, plus des limites du tableau de jeu. C'est pourquoi on a taille +2.
@@ -176,12 +180,13 @@ void affichageEtatBanquise(int **etatBanquise, int taille)  // Affiche la matric
     return;
 }
 
-int estDeLaGlace(int **etatBanquise, int i, int j) //Dis si la case est de la glace (1) ou de l'eau (0)  FONCTION OK
+ //Dis si la case est de la glace (1) ou de l'eau (0)
+int estDeLaGlace(int **etatBanquise, int i, int j)
 {
   return (etatBanquise[i][j]==0) ? 0 : 1; //Si la condition est vérifiée, on dit que c'est de l'eau (0) donc on return faux (0). Si la condition est fausse,on dit que c'est de la glace et on return vrai (1)
 }
-
-int banquisePeutFondre(int **etatBanquise, int i, int j, int taille) // Dis si la case actuelle a le droit de fondre (1) ou non (0)  FONCTION OK
+ // Dis si la case actuelle a le droit de fondre (1) ou non (0)
+int banquisePeutFondre(int **etatBanquise, int i, int j, int taille)
 {
     // VARIABLES
 
@@ -189,14 +194,14 @@ int banquisePeutFondre(int **etatBanquise, int i, int j, int taille) // Dis si l
 
     //CODE
 
-    if(i>0 && i<taille-1 && j>0 && j<taille-1)  //On regarde si la case de glace se situe � c�t� d'une limite du plateau o� ailleur
+    if(i>0 && i<taille-1 && j>0 && j<taille-1)  //On regarde si la case de glace se situe a cote d'une limite du plateau ou ailleur
     {
         peutFondre = estDeLaGlace(etatBanquise, i-1, j) + estDeLaGlace(etatBanquise, i+1, j) + estDeLaGlace(etatBanquise, i, j+1) + estDeLaGlace(etatBanquise, i, j-1);
-        if(peutFondre==4) //Si la case de glace est entour�e de glace, elle ne peut pas fondre (0)
+        if(peutFondre==4) //Si la case de glace est entourée de glace, elle ne peut pas fondre (0)
         {
             return 0;
         }
-        else // Si la case de glace pos�de au moins une case d'eau autour d'elle, elle peut dondre (1)
+        else // Si la case de glace possède au moins une case d'eau autour d'elle, elle peut dondre (1)
         {
             return 1;
         }
@@ -207,7 +212,8 @@ int banquisePeutFondre(int **etatBanquise, int i, int j, int taille) // Dis si l
     }
 }
 
-void majBanquise(T_case **banquise, int **etatBanquise, int taille) // Fonction permettant de copier l'�tat de la banquise et de la sauvegard�e dans la matrice etatBanquise FONCTION OK
+ // Fonction permettant de copier l'�tat de la banquise et de la sauvegard�e dans la matrice etatBanquise
+void majBanquise(T_case **banquise, int **etatBanquise, int taille)
 {
     int i, j;
     for (i=0;i<taille;i++) //On parcourt la matrice banquise
@@ -221,7 +227,8 @@ void majBanquise(T_case **banquise, int **etatBanquise, int taille) // Fonction 
     return;
 }
 
-void fonteDesGlaces(T_case **banquise,T_joueur *tableau_joueur, int **etatBanquise, int taille,int *ptr_nombre_morts) // Fonction permettant d'appliquer la fonte des glaces du terrain FONCTION OK
+// Fonction permettant d'appliquer la fonte des glaces du terrain
+void fonteDesGlaces(T_case **banquise,T_joueur *tableau_joueur, int **etatBanquise, int taille)
 {
     // VARIABLES
 
@@ -241,26 +248,49 @@ void fonteDesGlaces(T_case **banquise,T_joueur *tableau_joueur, int **etatBanqui
             */
             {
                 //Si oui, on tire un nombre aléatoire pour voir si elle peut fondre
-                fonteBanquise = rand() % 100; // Ici, la banquise à 5% de chance de fondre
+                fonteBanquise = rand() % 100; // Ici, la banquise à 10% de chance de fondre
                 if(fonteBanquise < 10) // On compare le nombre au pourcentage choisi, et si le nombre rentre dans le pourcentage :
                 {
                     banquise[i][j].etat = 0; //La banquise devient de l'eau
-                    banquise[i][j].typeObjet = NULL; // Il n'y a plus d'objet sur la case
-                    if(banquise[i][j].occupe!=NULL)
+                    if(banquise[i][j].typeObjet!=NULL)
                     {
-                      tableau_joueur[banquise[i][j].occupe->representation].etat=0;
-                      banquise[i][j].occupe=NULL;
-                      *ptr_nombre_morts= *ptr_nombre_morts+1;
-                      printf("oulalala :%d",*ptr_nombre_morts);
+                        if(banquise[i][j].typeObjet->objet==2) // Si l'objet est un axe de marteau, on le supprime ainsi que sa tête de marteau
+                        {
+                            banquise[banquise[i][j].typeObjet->position.x][banquise[i][j].typeObjet->position.y].typeObjet = NULL;
+                            banquise[banquise[i][j].typeObjet->position.x][banquise[i][j].typeObjet->position.y].symbole = 'E';
+                            banquise[i][j].typeObjet = NULL;
+                            banquise[i][j].symbole = 'E';
+                        }
+                        else if(banquise[i][j].typeObjet->objet==0)  // Si l'objet est un glaçon, il tombe dans l'eau (suppréssion) et la case redevient de la banquise
+                        {
+                            banquise[i][j].etat = 1;
+                            banquise[i][j].typeObjet = NULL;
+                        }
+                        else
+                        {
+                            banquise[i][j].typeObjet = NULL; // Si la case fond, on supprimes les autres objets
+                            if(banquise[i][j].occupe!=NULL) // Si un joueur était présent sur la case, il meurt et on incrémente le nombre de morts
+                            {
+                              tableau_joueur[banquise[i][j].occupe->representation].etat=0;
+                              banquise[i][j].occupe = NULL;
+                            }
+                            banquise[i][j].symbole = 'E'; // Le symbole change
+                        }
                     }
-                    banquise[i][j].symbole = 'E'; // Le symbole change
+                    if(banquise[i][j].typeObjet==NULL)
+                    {
+                        banquise[i][j].typeObjet = NULL; // Il n'y a plus d'objet sur la case
+                        if(banquise[i][j].occupe!=NULL)
+                        {
+                          tableau_joueur[banquise[i][j].occupe->representation].etat=0;
+                        }
+                        banquise[i][j].symbole = 'E'; // Le symbole change
+                    }
                 }
             }
         }
 
     }
-
-    //affichageBanquise(banquise, taille); // On affiche la nouvelle banquise apr�s la fonte des glaces.
 
     majBanquise(banquise, etatBanquise, taille); // Une fois la banquise enti�rement chang�e, on peut mettre � jour l'�tat de la surface de la banquise dans la deuxi�me matrice
 
@@ -268,7 +298,8 @@ void fonteDesGlaces(T_case **banquise,T_joueur *tableau_joueur, int **etatBanqui
     return;
 }
 
-void glaconFond(T_case **banquise, int taille)  //Fonction permettant d'appliquer la fonte aux gla�ons
+//Fonction permettant d'appliquer la fonte aux gla�ons
+void glaconFond(T_case **banquise, int taille)
 {
     //VARIABLES
 
@@ -283,7 +314,7 @@ void glaconFond(T_case **banquise, int taille)  //Fonction permettant d'applique
             if(banquise[i][j].typeObjet == 0)  // Si on trouve un gla�on, il a 5% de chance de fondre
             {
                 fonteGlacon = rand() % 100; // On tire un nombre al�atoire entre 0 et 99
-                if(fonteGlacon < 10) // On le compare au pourcentage de chance de fonde du gla�on
+                if(fonteGlacon < 5) // On le compare au pourcentage de chance de fonde du gla�on
                 {
                     banquise[i][j].typeObjet = NULL; // Si il est dans le pourcentage, le gla�on fond.
                 }
@@ -294,7 +325,8 @@ void glaconFond(T_case **banquise, int taille)  //Fonction permettant d'applique
 
 }
 
-int totalDeGlacon(T_case **banquise, int taille) // Compte le nombre total de glaçons présents sur la banquise
+// Compte le nombre total de glaçons présents sur la banquise
+int totalDeGlacon(T_case **banquise, int taille)
 {
 
   //VARIABLES
@@ -326,29 +358,7 @@ int totalDeGlacon(T_case **banquise, int taille) // Compte le nombre total de gl
   return nbGlacon;
 }
 
-
-void afficheCase( T_objet* unecase)
-{
-    switch(unecase->objet){
-        case glacon_obj : //, rocher, marteauAxe, marteauTete, piege
-            printf("\nG\n");
-            break;
-        case rocher :
-            printf("\nR\n");
-            break;
-        case marteauAxe :
-            printf("\nm\n");
-            break;
-        case marteauTete :
-            printf("\nT\n");
-            break;
-        case piege :
-            printf("\nP\n");
-            break;
-    }
-
-}
-
+//fonction qui regarde s'il y a un gagnant
 int winner(T_case** banquise,T_position *ptr_case_arrive)
 {
     if(banquise[ptr_case_arrive->x][ptr_case_arrive->y].occupe!=NULL)
@@ -359,7 +369,8 @@ int winner(T_case** banquise,T_position *ptr_case_arrive)
     return 0;
 }
 
-int numeroCasGlacon(T_case **banquise, int i, int j, int directionX, int directionY, int tailleBanquise) //Cette fonction donne un vecteur de déplacement au glaçon en fonction de ce qu'il va rencontrer
+// Cette fonction indique dans quel cas un glaçon se situe et comment il va réagir lors d'un déplacement
+int numeroCasGlacon(T_case **banquise, int i, int j, int directionX, int directionY, int tailleBanquise)
 /*
 Fonction qui indique le retour d'un glaçon qui se déplace:
 0 : le glaçon reste sur Place
@@ -404,11 +415,11 @@ Fonction qui indique le retour d'un glaçon qui se déplace:
             }
         }
     }
-    else if(banquise[i-1][j].typeObjet->objet==4)
+    else if(banquise[i-1][j].typeObjet->objet==4) // Si on rencontre un priège, on est dans le cas 3
     {
       retour = 3;
     }
-    else if(banquise[i-1][j].typeObjet->objet==5)
+    else if(banquise[i-1][j].typeObjet->objet==5) // Si on rencontre un ressort, on est dans le cas 4
     {
       retour = 4;
     }
@@ -451,11 +462,11 @@ Fonction qui indique le retour d'un glaçon qui se déplace:
             }
         }
     }
-    else if(banquise[i+1][j].typeObjet->objet==4)
+    else if(banquise[i+1][j].typeObjet->objet==4) // Si on rencontre un priège, on est dans le cas 3
     {
       retour = 3;
     }
-    else if(banquise[i+1][j].typeObjet->objet==5)
+    else if(banquise[i+1][j].typeObjet->objet==5) // Si on rencontre un ressort, on est dans le cas 4
     {
       retour = 4;
     }
@@ -499,11 +510,11 @@ Fonction qui indique le retour d'un glaçon qui se déplace:
             }
         }
     }
-    else if(banquise[i][j-1].typeObjet->objet==4)
+    else if(banquise[i][j-1].typeObjet->objet==4) // Si on rencontre un priège, on est dans le cas 3
     {
       retour = 3;
     }
-    else if(banquise[i][j-1].typeObjet->objet==5)
+    else if(banquise[i][j-1].typeObjet->objet==5) // Si on rencontre un ressort, on est dans le cas 4
     {
       retour = 4;
     }
@@ -547,11 +558,11 @@ Fonction qui indique le retour d'un glaçon qui se déplace:
             }
         }
     }
-    else if(banquise[i][j+1].typeObjet->objet==4)
+    else if(banquise[i][j+1].typeObjet->objet==4) // Si on rencontre un priège, on est dans le cas 3
     {
       retour = 3;
     }
-    else if(banquise[i][j+1].typeObjet->objet==5)
+    else if(banquise[i][j+1].typeObjet->objet==5) // Si on rencontre un ressort, on est dans le cas 4
     {
       retour = 4;
     }
@@ -566,7 +577,8 @@ Fonction qui indique le retour d'un glaçon qui se déplace:
 
 }
 
-void vecteurGlacon(T_case **banquise, int i, int j, int directionX, int directionY, int tailleBanquise, int *ptrRessort)
+//Cette fonction donne un vecteur de déplacement au glaçon en fonction du cas rencontrer
+void vecteurGlacon(T_case **banquise, int i, int j, int directionX, int directionY, int tailleBanquise, int *ptrPiege, T_joueur *tableau_joueur, int nombre_joueur)
 {
     int cas = numeroCasGlacon(banquise, i, j, directionX, directionY, tailleBanquise);
     switch(cas)
@@ -584,23 +596,19 @@ void vecteurGlacon(T_case **banquise, int i, int j, int directionX, int directio
     case 2 :
         banquise[i][j].typeObjet->vecteur.dx=0;
         banquise[i][j].typeObjet->vecteur.dy=0;
-        /*
-        cas du marteau a gerer
-        */
+        deplacementMarteau(banquise, i+directionX, j+directionY, directionX, directionY, tailleBanquise, 3, tableau_joueur, nombre_joueur);
         break;
 
-    case 3 : //Pour le ressort, on donne quand même le déplacement, on imobilisera le glaçon après le déplacement
+    case 3 : //Pour le piège, on donne quand même le déplacement, on imobilisera le glaçon après le déplacement
         banquise[i][j].typeObjet->vecteur.dx=directionX;
         banquise[i][j].typeObjet->vecteur.dy=directionY;
-        *ptrRessort=1;
-        /*
-        cas particulier du ressort
-        */
+        *ptrPiege=1;
         break;
 
     case 4 :
         banquise[i][j].typeObjet->vecteur.dx=-directionX;
         banquise[i][j].typeObjet->vecteur.dy=-directionY;
+        vecteurGlacon(banquise, i, j, banquise[i][j].typeObjet->vecteur.dx, banquise[i][j].typeObjet->vecteur.dy, tailleBanquise, ptrPiege, tableau_joueur, nombre_joueur); // Dans le cas du ressort, on vérifie que le glaçon ne rencontre rien et peut bouger lors du retour.
         break;
 
     default :
@@ -608,11 +616,12 @@ void vecteurGlacon(T_case **banquise, int i, int j, int directionX, int directio
     }
 }
 
-void deplacementGlacon(T_case **banquise, int i, int j, int directionX, int directionY, int tailleBanquise) //Cette fonction réalise le déplacement du glaçon et si le glaçon rencontre un joueur, appel une fonction de mort du joueur
+ //Cette fonction réalise le déplacement du glaçon et si le glaçon rencontre un joueur, appel une fonction de mort du joueur
+void deplacementGlacon(T_case **banquise, int i, int j, int directionX, int directionY, int tailleBanquise, T_joueur *tableau_joueur, int nombre_joueur)
 {
-    int casRessort=0;
-    int *ptrRessort=&casRessort;
-    if((directionX==0) && (directionY==0))
+    int casPiege=0;
+    int *ptrPiege=&casPiege;
+    if((directionX==0) && (directionY==0))  // Si le glaçon ne bouge pas, on arrête la fonction
     {
         return;
     }
@@ -626,38 +635,37 @@ void deplacementGlacon(T_case **banquise, int i, int j, int directionX, int dire
         else
             //Si le glaçon ne sort pas de la zone de jeu, on calcul son nouveau vecteur et on lui applique un déplacement
         {
-            vecteurGlacon(banquise, i, j, directionX, directionY, tailleBanquise, ptrRessort);
+            vecteurGlacon(banquise, i, j, directionX, directionY, tailleBanquise, ptrPiege, tableau_joueur, nombre_joueur);
             if((banquise[i][j].typeObjet->vecteur.dx==0) && (banquise[i][j].typeObjet->vecteur.dy==0))
             {
                 return;
             }
             else
             {
-                if(*ptrRessort==1) //Si on est dans le cas du ressort, ptrRessort=1. On enlève le piège de la prochaine casse pour dire qu'il est utilisé.
+                if(*ptrPiege==1) //Si on est dans le cas du piège, ptrPiege=1. On enlève le piège de la prochaine casse pour dire qu'il est utilisé.
                 {
                     banquise[i+banquise[i][j].typeObjet->vecteur.dx][j+banquise[i][j].typeObjet->vecteur.dy].typeObjet=NULL;
                 }
                 banquise[i+banquise[i][j].typeObjet->vecteur.dx][j+banquise[i][j].typeObjet->vecteur.dy].typeObjet=(T_objet*)malloc(sizeof(T_objet));
                 banquise[i+banquise[i][j].typeObjet->vecteur.dx][j+banquise[i][j].typeObjet->vecteur.dy].typeObjet=banquise[i][j].typeObjet;
-                if(*ptrRessort==1) //Si on est dans le cas du ressort, une fois le déplacement réalisé, on met le vecteur du glaçon à 0 pour qu'il ne bouge plus.
+                glaconKiller(banquise,tableau_joueur, i+banquise[i][j].typeObjet->vecteur.dx, j+banquise[i][j].typeObjet->vecteur.dy, nombre_joueur);
+                if(*ptrPiege==1) //Si on est dans le cas du piège, une fois le déplacement réalisé, on met le vecteur du glaçon à 0 pour qu'il ne bouge plus.
                 {
                     banquise[i+banquise[i][j].typeObjet->vecteur.dx][j+banquise[i][j].typeObjet->vecteur.dy].typeObjet->vecteur.dx=0;
                     banquise[i+banquise[i][j].typeObjet->vecteur.dx][j+banquise[i][j].typeObjet->vecteur.dy].typeObjet->vecteur.dy=0;
                 }
                 else
                 {
-                    transformationGlacon(banquise, i+banquise[i][j].typeObjet->vecteur.dx, i+banquise[i][j].typeObjet->vecteur.dy);
+                    transformationGlacon(banquise, i+banquise[i][j].typeObjet->vecteur.dx, j+banquise[i][j].typeObjet->vecteur.dy); // On regarde si le glaçon est tombé dans de l'eau
                 }
                 banquise[i][j].typeObjet=NULL;
             }
-            /*
-            fonction pour voir si rencontre joueur
-            */
         }
     }
     return;
 }
 
+ // Fonction qui regarde si un glaçon est dans de l'eau. Si c'est le cas, elle transforme le tout en case de banquise
 void transformationGlacon(T_case **banquise, int i, int j)
 {
     if(banquise[i][j].typeObjet!=NULL)
@@ -667,9 +675,5 @@ void transformationGlacon(T_case **banquise, int i, int j)
             banquise[i][j].etat=1;
             banquise[i][j].typeObjet=NULL;
         }
-    }
-    else
-    {
-        return;
     }
 }

@@ -36,6 +36,7 @@ typedef struct
     T_typeObjet objet;
     T_position position;
     T_vecteur vecteur;
+    int nbTourMarteau; //Seulement pour les marteau, pour indiquer le nombre de déplacement qui leur reste à faire
 }T_objet; // D�fini les diff�rents objets
 
 typedef struct
