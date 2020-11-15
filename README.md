@@ -8,4 +8,4 @@ L'objectif de ce projet a été de ce familiarisé et de créer un projet concre
 
 ## Resultat
 
-Nous avons obtenus la note de 15/20 pour celui-ci.
+Nous avons obtenu la note de 15/20 pour celui-ci.
